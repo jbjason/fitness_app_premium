@@ -2,16 +2,18 @@ import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class Onboard6Weight extends StatefulWidget {
-  const Onboard6Weight(
-      {super.key, required this.selectedWeight, required this.selectedHeight});
+class Onboard7TargetWeight extends StatefulWidget {
+  const Onboard7TargetWeight(
+      {super.key,
+      required this.selectedWeight,
+      required this.selectedTargetWeight});
   final ValueNotifier<double> selectedWeight;
-  final ValueNotifier<double> selectedHeight;
+  final ValueNotifier<double> selectedTargetWeight;
   @override
-  State<Onboard6Weight> createState() => _Onboard6WeightState();
+  State<Onboard7TargetWeight> createState() => _Onboard7TargetWeightState();
 }
 
-class _Onboard6WeightState extends State<Onboard6Weight> {
+class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
   double _pointerValue = 60.0;
   final double _minimumWeight = 20.0;
   final double _maximumWeight = 180.0;
@@ -22,12 +24,20 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          "What's your current weight?",
+          "What's your target weight?",
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 40),
-        Text("${_pointerValue.toStringAsFixed(1)} kg",
-            textAlign: TextAlign.center),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(),
+            Text("${_pointerValue.toStringAsFixed(1)} kg",
+                textAlign: TextAlign.center),
+            Text("${widget.selectedTargetWeight.value.toStringAsFixed(1)} kg",
+                textAlign: TextAlign.center),
+          ],
+        ),
         // Syncfusion Gauge
         SfLinearGauge(
           minimum: _minimumWeight,
@@ -62,6 +72,7 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
               dragBehavior: LinearMarkerDragBehavior.constrained,
               onChanged: (double value) {
                 setState(() => _pointerValue = value);
+                widget.selectedTargetWeight.value = _pointerValue;
               },
             ),
             // Display Weight
@@ -91,18 +102,12 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Your current BMI"),
-              Row(
-                children: [
-                  Text(
-                    _getBMI.toStringAsFixed(1),
-                    style: TextStyle(color: MyColor.primaryColor, fontSize: 25),
-                  ),
-                  const SizedBox(width: 20),
-                  Text(
-                      "You only need a bit more sweat exercise to see a fitter you!"),
-                ],
-              ),
+              Text("👌 REASONABLE GOAL!"),
+              const SizedBox(height: 10),
+              Text(
+                  "👌 You will lose $_getLoasingWeightPercent of body weight"),
+              Text(
+                  "Moderate weight loss can alse make a big difference:\n- Lower blood pressure\n- Reduce the risk of type 2 diabetes"),
             ],
           ),
         )
@@ -110,35 +115,15 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
     );
   }
 
-  double get _getBMI {
-    final heightInMeter = widget.selectedHeight.value * .305;
-    return _pointerValue / (heightInMeter * heightInMeter);
+  String get _getLoasingWeightPercent {
+    double percent = 0.0;
+    if (widget.selectedTargetWeight.value < widget.selectedWeight.value) {
+      percent = (widget.selectedTargetWeight.value * 100) /
+          widget.selectedWeight.value;
+    } else {
+      percent = (widget.selectedWeight.value * 100) /
+          widget.selectedTargetWeight.value;
+    }
+    return "${percent.toStringAsFixed(1)}%";
   }
 }
-
-/*
-BMI Formula:
-
-BMI=  Weight(kg)/ height(m)square(2)
- 
-
-Underweight: BMI < 18.5
-
-Healthy: BMI 18.5–24.9
-
-Overweight: BMI 25–29.9
-
-Obese: BMI ≥ 30
-
-Limitations:
-
-BMI doesn’t account for muscle mass (athletes may have high BMI but low fat).
-
-Body frame size (small, medium, large) can influence ideal weight.
-
-Alternative Measures:
-
-Waist-to-Height Ratio (keep waist circumference < half your height).
-
-Body Fat Percentage (healthy range: Men 10–20%, Women 18–28%).
-*/

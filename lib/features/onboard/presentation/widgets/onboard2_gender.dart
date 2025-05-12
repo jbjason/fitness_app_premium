@@ -1,9 +1,11 @@
+import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
 class Onboard2Gender extends StatefulWidget {
-  const Onboard2Gender({super.key});
+  const Onboard2Gender({super.key, required this.selectedGender});
+  final ValueNotifier<int> selectedGender;
   @override
   State<Onboard2Gender> createState() => _Onboard2GenderState();
 }
@@ -13,7 +15,6 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         // Title
@@ -26,19 +27,19 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildGenderCard(0, MyImage.maleModelImg, size),
+            _buildGenderCard(0, MyImage.maleModelImg),
             SizedBox(width: 10),
-            _buildGenderCard(1, MyImage.femaleModelImg, size),
+            _buildGenderCard(1, MyImage.femaleModelImg),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildGenderCard(int genderIndex, String imagePath, Size size) {
+  Widget _buildGenderCard(int genderIndex, String imagePath) {
     return SizedBox(
-      width: (size.width - 50) * .5,
-      height: size.height * .5,
+      width: (context.screenWidth - 50) * .5,
+      height: context.screenHeight * .5,
       child: Column(
         children: [
           Expanded(
@@ -46,6 +47,7 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
               onTap: () {
                 if (selectedGender != genderIndex) {
                   setState(() => selectedGender = genderIndex);
+                  widget.selectedGender.value = selectedGender;
                 }
               },
               child: Stack(

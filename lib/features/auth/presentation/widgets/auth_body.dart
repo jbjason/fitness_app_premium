@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_dialog.dart';
 import 'package:fitness_app_premium/core/util/my_dimens.dart';
@@ -26,10 +27,9 @@ class _AuhtBodyState extends State<AuhtBody> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return AnimatedContainer(
-      height: _isLogin ? size.height * .5 : size.height * .65,
-      width: size.width * .8,
+      height: _isLogin ? context.screenHeight * .5 : context.screenHeight * .65,
+      width: context.screenWidth * .8,
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),

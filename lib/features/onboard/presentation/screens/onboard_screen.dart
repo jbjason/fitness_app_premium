@@ -5,6 +5,7 @@ import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboar
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard4_target.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard5_height.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard6_weight.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard7_target_weight.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/web.dart';
 
@@ -15,19 +16,31 @@ class OnboardScreen extends StatefulWidget {
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
-  final _controller = PageController(initialPage: 0, keepPage: true);
+  final _controller = PageController();
+  final _selectedGender = ValueNotifier<int>(0);
+  final _selectedPlan = ValueNotifier<int>(0);
+  final _selectedTarget = ValueNotifier<int>(0);
+  final _selectedHeight = ValueNotifier<double>(0);
+  final _selectedWeight = ValueNotifier<double>(0);
+  final _selectedTargetWeight = ValueNotifier<double>(0);
   final _pages = [];
   int _selectedPage = 0;
 
   @override
   void initState() {
     super.initState();
-    _pages.add(Onboard1Welcome(onStart: _onPageChange, index: 0));
-    _pages.add(Onboard2Gender());
-    _pages.add(Onboard3Plan());
-    _pages.add(Onboard4Target());
-    _pages.add(Onboard5Height());
-    _pages.add(Onboard6Weight());
+    _pages.clear();
+    _pages.add(Onboard1Welcome(onStart: _onPageChange));
+    _pages.add(Onboard2Gender(selectedGender: _selectedGender));
+    _pages.add(Onboard3Plan(selectedPlan: _selectedPlan));
+    _pages.add(Onboard4Target(selectedTarget: _selectedTarget));
+    _pages.add(Onboard5Height(selectedHeight: _selectedHeight));
+    _pages.add(Onboard6Weight(
+        selectedWeight: _selectedWeight, selectedHeight: _selectedHeight));
+    _pages.add(Onboard7TargetWeight(
+      selectedTargetWeight: _selectedTargetWeight,
+      selectedWeight: _selectedWeight,
+    ));
   }
 
   @override
@@ -36,7 +49,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            if(_selectedPage!=0) _getProgressBarAndBackButton,
+            if (_selectedPage != 0) _getProgressBarAndBackButton,
             const SizedBox(height: 30),
             // pages
             Expanded(
@@ -76,8 +89,9 @@ class _OnboardScreenState extends State<OnboardScreen> {
   }
 
   void _onPageChange(int index) {
+    setState(() => _selectedPage = index + 1);
     _controller.animateToPage(
-      index + 1,
+      _selectedPage,
       duration: Duration(milliseconds: 200),
       curve: Curves.linear,
     );

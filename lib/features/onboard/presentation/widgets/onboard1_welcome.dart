@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 class Onboard1Welcome extends StatelessWidget {
   const Onboard1Welcome(
-      {super.key, required this.onStart, required this.index});
-  final Function onStart;
-  final int index;
+      {super.key, required this.onStart});
+  final Function(int index) onStart;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,7 +60,7 @@ class Onboard1Welcome extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: ElevatedButton(
-            onPressed: () => onStart(index),
+            onPressed: () => onStart(0),
             child: Text(
               'Start',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

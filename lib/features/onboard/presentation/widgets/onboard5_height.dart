@@ -1,16 +1,18 @@
+import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Onboard5Height extends StatefulWidget {
-  const Onboard5Height({super.key});
+  const Onboard5Height({super.key,required this.selectedHeight});
+  final ValueNotifier<double> selectedHeight;
   @override
   State<Onboard5Height> createState() => _Onboard5HeightState();
 }
 
 class _Onboard5HeightState extends State<Onboard5Height> {
-   double _pointerValue = 152; // Start from 4ft
+  double _pointerValue = 152; // Start from 4ft
   final double _minimumLevel = 122; // 4ft in cm
   final double _maximumLevel = 213; // 7ft in cm
 
@@ -41,7 +43,6 @@ class _Onboard5HeightState extends State<Onboard5Height> {
   }
 
   Widget _buildHeightCalculator(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SfLinearGauge(
       orientation: LinearGaugeOrientation.vertical,
       minimum: _minimumLevel,
@@ -64,7 +65,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
           shapeType: LinearShapePointerType.rectangle,
           color: MyColor.accentColor,
           height: 2,
-          width: size.width * .8 - 100,
+          width: context.screenWidth * .8 - 100,
         ),
         _buildLinearWidgetPointer(
           value: _pointerValue,
@@ -77,7 +78,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
         ),
         _buildLinearWidgetPointer(
           value: _pointerValue,
-          offset: size.width * .8 - 100,
+          offset: context.screenWidth * .8 - 100,
           position: LinearElementPosition.outside,
           child: Container(
             width: 60,
@@ -105,9 +106,9 @@ class _Onboard5HeightState extends State<Onboard5Height> {
       ranges: <LinearGaugeRange>[
         LinearGaugeRange(
           endValue: _pointerValue,
-          startWidth: size.width * .8 - 50,
-          midWidth: size.width * .8 - 50,
-          endWidth: size.width * .8,
+          startWidth: context.screenWidth * .8 - 50,
+          midWidth: context.screenWidth * .8 - 50,
+          endWidth: context.screenWidth * .8,
           color: Colors.transparent,
           child: Image.asset(
             width: 30,
@@ -133,6 +134,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
         setState(() {
           _pointerValue = value as double;
         });
+        widget.selectedHeight.value = _pointerValue;
       },
       offset: offset,
       position: position,
@@ -180,7 +182,6 @@ class _Onboard5HeightState extends State<Onboard5Height> {
   }
 
   Widget _buildHeightCalculator(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SfLinearGauge(
       orientation: LinearGaugeOrientation.vertical,
       maximum: _maximumLevel,
@@ -202,7 +203,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
           shapeType: LinearShapePointerType.rectangle,
           color: MyColor.accentColor,
           height: 2,
-          width: size.width * .8 - 100,
+          width: context.screenWidth * .8 - 100,
         ),
         _buildLinearWidgetPointer(
           value: _pointerValue,
@@ -215,7 +216,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
         ),
         _buildLinearWidgetPointer(
           value: _pointerValue,
-          offset: size.width * .8 - 100,
+          offset: context.screenWidth * .8 - 100,
           position: LinearElementPosition.outside,
           child: Container(
             width: 60,
@@ -242,9 +243,9 @@ class _Onboard5HeightState extends State<Onboard5Height> {
       ranges: <LinearGaugeRange>[
         LinearGaugeRange(
           endValue: _pointerValue,
-          startWidth: size.width * .8 - 50,
-          midWidth: size.width * .8 - 50,
-          endWidth: size.width * .8,
+          startWidth: context.screenWidth * .8 - 50,
+          midWidth: context.screenWidth * .8 - 50,
+          endWidth: context.screenWidth * .8,
           color: Colors.transparent,
           child: Image.asset(
             width: 30,

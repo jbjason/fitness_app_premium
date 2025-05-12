@@ -2,13 +2,14 @@ import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:flutter/material.dart';
 
 class Onboard3Plan extends StatefulWidget {
-  const Onboard3Plan({super.key});
+  const Onboard3Plan({super.key, required this.selectedPlan});
+  final ValueNotifier<int> selectedPlan;
   @override
   State<Onboard3Plan> createState() => _Onboard3PlanState();
 }
 
 class _Onboard3PlanState extends State<Onboard3Plan> {
-  String? selectedPlan;
+  int _selectedPlan=0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,18 +44,19 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
         ),
         SizedBox(height: 20),
         // Plan Options
-        _buildPlanOption('Beginner', '5-10 min a day'),
-        _buildPlanOption('Intermediate', '10-20 min a day'),
-        _buildPlanOption('Advanced', '15-30 min a day'),
+        _buildPlanOption(0, 'Beginner', '5-10 min a day'),
+        _buildPlanOption(1, 'Intermediate', '10-20 min a day'),
+        _buildPlanOption(2, 'Advanced', '15-30 min a day'),
       ],
     );
   }
 
   // Plan Card Builder
-  Widget _buildPlanOption(String plan, String duration) {
+  Widget _buildPlanOption(int index, String plan, String duration) {
     return GestureDetector(
       onTap: () {
-        setState(() => selectedPlan = plan);
+        setState(() => _selectedPlan = index);
+        widget.selectedPlan.value = index;
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
@@ -62,7 +64,7 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: selectedPlan == plan ? MyColor.accentColor : Colors.white,
+            color: _selectedPlan == index ? MyColor.accentColor : Colors.white,
             width: 2,
           ),
         ),
@@ -84,9 +86,10 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
             ),
             CircleAvatar(
               radius: 10,
-              backgroundColor:
-                  selectedPlan == plan ? MyColor.accentColor  : Colors.transparent,
-              child: selectedPlan == plan
+              backgroundColor: _selectedPlan == index
+                  ? MyColor.accentColor
+                  : Colors.transparent,
+              child: _selectedPlan == index
                   ? Icon(Icons.check, size: 12, color: Colors.white)
                   : null,
             ),

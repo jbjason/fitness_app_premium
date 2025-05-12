@@ -3,13 +3,14 @@ import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
 class Onboard4Target extends StatefulWidget {
-  const Onboard4Target({super.key});
+  const Onboard4Target({super.key, required this.selectedTarget});
+  final ValueNotifier<int> selectedTarget;
   @override
   State<Onboard4Target> createState() => _Onboard4TargetState();
 }
 
 class _Onboard4TargetState extends State<Onboard4Target> {
-  int selectedIndex = -1;
+  int selectedIndex = 0;
   final List<Map<String, String>> _goals = [
     {
       'title': 'Lose Weight & Keep Fit',
@@ -61,6 +62,7 @@ class _Onboard4TargetState extends State<Onboard4Target> {
                   return GestureDetector(
                     onTap: () {
                       setState(() => selectedIndex = index);
+                      widget.selectedTarget.value = index;
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -111,7 +113,7 @@ class _Onboard4TargetState extends State<Onboard4Target> {
                             _goals[index]['description'] != '')
                           Container(
                             padding: const EdgeInsets.all(20),
-                                margin: EdgeInsets.symmetric(vertical: 10),
+                            margin: EdgeInsets.symmetric(vertical: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.grey[100],
