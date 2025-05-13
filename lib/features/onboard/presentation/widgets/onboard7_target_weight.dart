@@ -95,6 +95,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
 
         const SizedBox(height: 40),
         Container(
+          padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
@@ -105,7 +106,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
               Text("👌 REASONABLE GOAL!"),
               const SizedBox(height: 10),
               Text(
-                  "👌 You will lose $_getLoasingWeightPercent of body weight"),
+                  "You will lose $_getLoasingWeightPercent of body weight"),
               Text(
                   "Moderate weight loss can alse make a big difference:\n- Lower blood pressure\n- Reduce the risk of type 2 diabetes"),
             ],

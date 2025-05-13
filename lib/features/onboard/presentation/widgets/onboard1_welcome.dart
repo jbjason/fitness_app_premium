@@ -3,9 +3,8 @@ import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
 class Onboard1Welcome extends StatelessWidget {
-  const Onboard1Welcome(
-      {super.key, required this.onStart});
-  final Function(int index) onStart;
+  const Onboard1Welcome({super.key, required this.onStart});
+  final Function(bool isForward) onStart;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,17 +55,6 @@ class Onboard1Welcome extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
-        // Start Button
-        Align(
-          alignment: Alignment.center,
-          child: ElevatedButton(
-            onPressed: () => onStart(0),
-            child: Text(
-              'Start',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
       ],
     );
   }

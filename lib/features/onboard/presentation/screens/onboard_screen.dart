@@ -29,8 +29,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
   @override
   void initState() {
     super.initState();
-    _pages.clear();
-    _pages.add(Onboard1Welcome(onStart: _onPageChange));
+    _pages.add(Onboard1Welcome(onStart: _onPageChangeForward));
     _pages.add(Onboard2Gender(selectedGender: _selectedGender));
     _pages.add(Onboard3Plan(selectedPlan: _selectedPlan));
     _pages.add(Onboard4Target(selectedTarget: _selectedTarget));
@@ -58,50 +57,46 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 child: PageView.builder(
                   controller: _controller,
                   physics: NeverScrollableScrollPhysics(),
-                  onPageChanged: (val) => setState(() => _selectedPage = val),
                   itemCount: _pages.length,
                   itemBuilder: (context, i) => _pages[i],
                 ),
               ),
             ),
             // progress bar & next button
-            if (_selectedPage != 0) ...[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_pages.length - 1 == _selectedPage) {
-                      Logger().e("last index");
-                      return;
-                    }
-                    _onPageChange(_selectedPage);
-                  },
-                  child: const Text("Next"),
-                ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_pages.length - 1 == _selectedPage) {
+                    Logger().e("last index");
+                    return;
+                  }
+                  _onPageChangeForward(true);
+                },
+                child: Text(_selectedPage == 0 ? "Start" : "Next"),
               ),
-              const SizedBox(height: 10),
-            ]
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
 
-  void _onPageChange(int index) {
-    setState(() => _selectedPage = index + 1);
-    _controller.animateToPage(
-      _selectedPage,
-      duration: Duration(milliseconds: 200),
-      curve: Curves.linear,
-    );
+  void _onPageChangeForward(bool isForward) {
+    _selectedPage = isForward ? _selectedPage + 1 : _selectedPage - 1;
+    setState(() {});
+    Logger().w("current aPage ------------------- $_selectedPage");
+    _controller.animateToPage(_selectedPage,
+        duration: Duration(milliseconds: 200), curve: Curves.linear);
   }
 
   Widget get _getProgressBarAndBackButton {
     return Row(
       children: [
         IconButton(
-          onPressed: () => _onPageChange(_selectedPage - 2),
+          onPressed: () => _onPageChangeForward(false),
           icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
         ),
         const SizedBox(width: 20),

@@ -84,6 +84,7 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
 
         const SizedBox(height: 40),
         Container(
+          padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
@@ -99,8 +100,10 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
                     style: TextStyle(color: MyColor.primaryColor, fontSize: 25),
                   ),
                   const SizedBox(width: 20),
-                  Text(
-                      "You only need a bit more sweat exercise to see a fitter you!"),
+                  Expanded(
+                    child: Text(
+                        "You only need a bit more sweat exercise to see a fitter you!"),
+                  ),
                 ],
               ),
             ],
