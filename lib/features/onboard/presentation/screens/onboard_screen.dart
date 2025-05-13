@@ -48,6 +48,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // progressBar & backButton
             if (_selectedPage != 0) _getProgressBarAndBackButton,
             const SizedBox(height: 30),
             // pages
@@ -87,7 +88,6 @@ class _OnboardScreenState extends State<OnboardScreen> {
   void _onPageChangeForward(bool isForward) {
     _selectedPage = isForward ? _selectedPage + 1 : _selectedPage - 1;
     setState(() {});
-    Logger().w("current aPage ------------------- $_selectedPage");
     _controller.animateToPage(_selectedPage,
         duration: Duration(milliseconds: 200), curve: Curves.linear);
   }
@@ -95,10 +95,14 @@ class _OnboardScreenState extends State<OnboardScreen> {
   Widget get _getProgressBarAndBackButton {
     return Row(
       children: [
-        IconButton(
-          onPressed: () => _onPageChangeForward(false),
-          icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
-        ),
+        // backButton
+        // for first page we don't need backBUtton
+        _selectedPage == 1
+            ? SizedBox()
+            : IconButton(
+                onPressed: () => _onPageChangeForward(false),
+                icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
+              ),
         const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
