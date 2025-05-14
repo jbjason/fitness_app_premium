@@ -1,15 +1,16 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Onboard3Plan extends StatefulWidget {
-  const Onboard3Plan({super.key, required this.selectedPlan});
-  final ValueNotifier<int> selectedPlan;
+  const Onboard3Plan({super.key});
   @override
   State<Onboard3Plan> createState() => _Onboard3PlanState();
 }
 
 class _Onboard3PlanState extends State<Onboard3Plan> {
-  int _selectedPlan=0;
+  int _selectedPlan = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
     return GestureDetector(
       onTap: () {
         setState(() => _selectedPlan = index);
-        widget.selectedPlan.value = index;
+        final data = Provider.of<OnboardProvider>(context, listen: false);
+        data.setPlan(index);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 15),

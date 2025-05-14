@@ -1,12 +1,11 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Onboard6Weight extends StatefulWidget {
-  const Onboard6Weight(
-      {super.key, required this.selectedWeight, required this.selectedHeight});
-  final ValueNotifier<double> selectedWeight;
-  final ValueNotifier<double> selectedHeight;
+  const Onboard6Weight({super.key});
   @override
   State<Onboard6Weight> createState() => _Onboard6WeightState();
 }
@@ -62,6 +61,9 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
               dragBehavior: LinearMarkerDragBehavior.constrained,
               onChanged: (double value) {
                 setState(() => _pointerValue = value);
+                final data =
+                    Provider.of<OnboardProvider>(context, listen: false);
+                data.setWeight(value);
               },
             ),
             // Display Weight
@@ -106,6 +108,14 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
                   ),
                 ],
               ),
+              Text("""\n
+Underweight: BMI < 18.5
+
+Healthy: BMI 18.5–24.9
+
+Overweight: BMI 25–29.9
+
+Obese: BMI ≥ 30""")
             ],
           ),
         )
@@ -114,7 +124,8 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
   }
 
   double get _getBMI {
-    final heightInMeter = widget.selectedHeight.value * .305;
+    final data = Provider.of<OnboardProvider>(context, listen: false);
+    final heightInMeter = data.selectedHeight * .305;
     return _pointerValue / (heightInMeter * heightInMeter);
   }
 }

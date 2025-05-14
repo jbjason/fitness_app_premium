@@ -1,11 +1,12 @@
 import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Onboard2Gender extends StatefulWidget {
-  const Onboard2Gender({super.key, required this.selectedGender});
-  final ValueNotifier<int> selectedGender;
+  const Onboard2Gender({super.key});
   @override
   State<Onboard2Gender> createState() => _Onboard2GenderState();
 }
@@ -47,7 +48,8 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
               onTap: () {
                 if (selectedGender != genderIndex) {
                   setState(() => selectedGender = genderIndex);
-                  widget.selectedGender.value = selectedGender;
+                  final data = Provider.of<OnboardProvider>(context,listen: false);
+                  data.setGender(genderIndex);
                 }
               },
               child: Stack(

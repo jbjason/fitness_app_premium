@@ -16,31 +16,17 @@ class OnboardScreen extends StatefulWidget {
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
-  final _controller = PageController();
-  final _selectedGender = ValueNotifier<int>(0);
-  final _selectedPlan = ValueNotifier<int>(0);
-  final _selectedTarget = ValueNotifier<int>(0);
-  final _selectedHeight = ValueNotifier<double>(0);
-  final _selectedWeight = ValueNotifier<double>(0);
-  final _selectedTargetWeight = ValueNotifier<double>(0);
-  final _pages = [];
+  final _controller = PageController(keepPage: true);
+  final _pages = [
+    Onboard1Welcome(),
+    Onboard2Gender(),
+    Onboard3Plan(),
+    Onboard4Target(),
+    Onboard5Height(),
+    Onboard6Weight(),
+    Onboard7TargetWeight(),
+  ];
   int _selectedPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pages.add(Onboard1Welcome(onStart: _onPageChangeForward));
-    _pages.add(Onboard2Gender(selectedGender: _selectedGender));
-    _pages.add(Onboard3Plan(selectedPlan: _selectedPlan));
-    _pages.add(Onboard4Target(selectedTarget: _selectedTarget));
-    _pages.add(Onboard5Height(selectedHeight: _selectedHeight));
-    _pages.add(Onboard6Weight(
-        selectedWeight: _selectedWeight, selectedHeight: _selectedHeight));
-    _pages.add(Onboard7TargetWeight(
-      selectedTargetWeight: _selectedTargetWeight,
-      selectedWeight: _selectedWeight,
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {

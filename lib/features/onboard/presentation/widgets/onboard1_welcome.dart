@@ -3,8 +3,7 @@ import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
 class Onboard1Welcome extends StatelessWidget {
-  const Onboard1Welcome({super.key, required this.onStart});
-  final Function(bool isForward) onStart;
+  const Onboard1Welcome({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(

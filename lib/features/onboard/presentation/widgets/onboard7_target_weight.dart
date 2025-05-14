@@ -1,14 +1,11 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Onboard7TargetWeight extends StatefulWidget {
-  const Onboard7TargetWeight(
-      {super.key,
-      required this.selectedWeight,
-      required this.selectedTargetWeight});
-  final ValueNotifier<double> selectedWeight;
-  final ValueNotifier<double> selectedTargetWeight;
+  const Onboard7TargetWeight({super.key});
   @override
   State<Onboard7TargetWeight> createState() => _Onboard7TargetWeightState();
 }
@@ -20,6 +17,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<OnboardProvider>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -34,7 +32,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
             SizedBox(),
             Text("${_pointerValue.toStringAsFixed(1)} kg",
                 textAlign: TextAlign.center),
-            Text("${widget.selectedTargetWeight.value.toStringAsFixed(1)} kg",
+            Text("${data.selectedWeight.toStringAsFixed(1)} kg",
                 textAlign: TextAlign.center),
           ],
         ),
@@ -72,7 +70,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
               dragBehavior: LinearMarkerDragBehavior.constrained,
               onChanged: (double value) {
                 setState(() => _pointerValue = value);
-                widget.selectedTargetWeight.value = _pointerValue;
+                data.setTargetWeight(_pointerValue);
               },
             ),
             // Display Weight
@@ -105,8 +103,7 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
             children: [
               Text("👌 REASONABLE GOAL!"),
               const SizedBox(height: 10),
-              Text(
-                  "You will lose $_getLoasingWeightPercent of body weight"),
+              Text("You will $_getLoasingWeightPercent of body weight"),
               Text(
                   "Moderate weight loss can alse make a big difference:\n- Lower blood pressure\n- Reduce the risk of type 2 diabetes"),
             ],
@@ -117,14 +114,16 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
   }
 
   String get _getLoasingWeightPercent {
+    final data = Provider.of<OnboardProvider>(context, listen: false);
     double percent = 0.0;
-    if (widget.selectedTargetWeight.value < widget.selectedWeight.value) {
-      percent = (widget.selectedTargetWeight.value * 100) /
-          widget.selectedWeight.value;
+    if (data.selectedTargetWeight < data.selectedWeight) {
+      percent = 100 - ((data.selectedTargetWeight * 100) / data.selectedWeight);
+
+      return "lose ${percent.toStringAsFixed(1)}%";
     } else {
-      percent = (widget.selectedWeight.value * 100) /
-          widget.selectedTargetWeight.value;
+      percent = 100 - ((data.selectedWeight * 100) / data.selectedTargetWeight);
+
+      return "gain ${percent.toStringAsFixed(1)}%";
     }
-    return "${percent.toStringAsFixed(1)}%";
   }
 }

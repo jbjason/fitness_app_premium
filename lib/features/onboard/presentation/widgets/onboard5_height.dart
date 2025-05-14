@@ -1,12 +1,13 @@
 import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Onboard5Height extends StatefulWidget {
-  const Onboard5Height({super.key,required this.selectedHeight});
-  final ValueNotifier<double> selectedHeight;
+  const Onboard5Height({super.key});
   @override
   State<Onboard5Height> createState() => _Onboard5HeightState();
 }
@@ -21,7 +22,11 @@ class _Onboard5HeightState extends State<Onboard5Height> {
     double inches = cmValue / 2.54;
     int feet = inches ~/ 12;
     int remainingInches = (inches % 12).round();
-    return "${feet}ft ${remainingInches}in";
+    // setting ft & inches as  feet.inches
+    final data = Provider.of<OnboardProvider>(context, listen: false);
+    data.setHeight(feet + (12 * remainingInches / 100));
+    print("${feet + (12 * remainingInches / 100)}---------");
+    return "${feet}ft ${remainingInches}inch";
   }
 
   // Generates labels in feet and inches
@@ -58,9 +63,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
           value: _pointerValue,
           enableAnimation: false,
           onChanged: (dynamic value) {
-            setState(() {
-              _pointerValue = value as double;
-            });
+            setState(() => _pointerValue = value as double);
           },
           shapeType: LinearShapePointerType.rectangle,
           color: MyColor.accentColor,
@@ -131,10 +134,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
       value: value,
       enableAnimation: false,
       onChanged: (dynamic value) {
-        setState(() {
-          _pointerValue = value as double;
-        });
-        widget.selectedHeight.value = _pointerValue;
+        setState(() => _pointerValue = value as double);
       },
       offset: offset,
       position: position,

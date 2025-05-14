@@ -1,10 +1,11 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Onboard4Target extends StatefulWidget {
-  const Onboard4Target({super.key, required this.selectedTarget});
-  final ValueNotifier<int> selectedTarget;
+  const Onboard4Target({super.key});
   @override
   State<Onboard4Target> createState() => _Onboard4TargetState();
 }
@@ -62,7 +63,9 @@ class _Onboard4TargetState extends State<Onboard4Target> {
                   return GestureDetector(
                     onTap: () {
                       setState(() => selectedIndex = index);
-                      widget.selectedTarget.value = index;
+                      final data =
+                          Provider.of<OnboardProvider>(context, listen: false);
+                      data.setTarget(index);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
