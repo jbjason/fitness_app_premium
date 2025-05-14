@@ -109,13 +109,13 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
                 ],
               ),
               Text("""\n
-Underweight: BMI < 18.5
+      Underweight: BMI < 18.5
 
-Healthy: BMI 18.5–24.9
+      Healthy: BMI 18.5 – 24.9
 
-Overweight: BMI 25–29.9
+      Overweight: BMI 25 – 29.9
 
-Obese: BMI ≥ 30""")
+      Obese: BMI ≥ 30""")
             ],
           ),
         )

@@ -12,28 +12,49 @@ class Onboard2Gender extends StatefulWidget {
 }
 
 class _Onboard2GenderState extends State<Onboard2Gender> {
-  int selectedGender = 0;
+  int _selectedGender = 0;
+  bool _isAnimationStart = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      Future.delayed(Duration(milliseconds: 2000)).then(
+        (_) => setState(() => _isAnimationStart = false),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Title
-        Text(
-          "What's Your Gender?",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 30),
-        // Gender Selection
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildGenderCard(0, MyImage.maleModelImg),
-            SizedBox(width: 10),
-            _buildGenderCard(1, MyImage.femaleModelImg),
-          ],
-        ),
-      ],
+    return AnimatedCrossFade(
+      duration: Duration(milliseconds: 2000),
+      crossFadeState: _isAnimationStart
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+          firstCurve: Curves.easeIn,
+
+          secondCurve: Curves.easeInCubic,
+      firstChild: _getSplashBody,
+      secondChild: Column(
+        children: [
+          // Title
+          Text(
+            "What's Your Gender?",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 30),
+          // Gender Selection
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildGenderCard(0, MyImage.maleModelImg),
+              SizedBox(width: 10),
+              _buildGenderCard(1, MyImage.femaleModelImg),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -46,9 +67,10 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                if (selectedGender != genderIndex) {
-                  setState(() => selectedGender = genderIndex);
-                  final data = Provider.of<OnboardProvider>(context,listen: false);
+                if (_selectedGender != genderIndex) {
+                  setState(() => _selectedGender = genderIndex);
+                  final data =
+                      Provider.of<OnboardProvider>(context, listen: false);
                   data.setGender(genderIndex);
                 }
               },
@@ -59,7 +81,7 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
                   Positioned.fill(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: selectedGender == genderIndex
+                        color: _selectedGender == genderIndex
                             ? MyColor.accentColor
                             : Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -85,12 +107,50 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color:
-                  selectedGender == genderIndex ? MyColor.accentColor : Colors.black,
+              color: _selectedGender == genderIndex
+                  ? MyColor.accentColor
+                  : Colors.black,
             ),
           ),
         ],
       ),
     );
   }
+
+  Widget get _getSplashBody => DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              MyColor.primaryColor,
+              MyColor.primaryColor.withOpacity(.8),
+              MyColor.accentColor,
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              "— PART 01 —",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[600],
+                letterSpacing: 1.5,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "GOAL & FOCUS",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      );
 }

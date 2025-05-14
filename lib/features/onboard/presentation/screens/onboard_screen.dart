@@ -6,8 +6,8 @@ import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboar
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard5_height.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard6_weight.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard7_target_weight.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard8_complete.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -25,6 +25,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
     Onboard5Height(),
     Onboard6Weight(),
     Onboard7TargetWeight(),
+    Onboard8Complete(),
   ];
   int _selectedPage = 0;
 
@@ -49,21 +50,19 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 ),
               ),
             ),
-            // progress bar & next button
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_pages.length - 1 == _selectedPage) {
-                    Logger().e("last index");
-                    return;
-                  }
-                  _onPageChangeForward(true);
-                },
-                child: Text(_selectedPage == 0 ? "Start" : "Next"),
+            // next button
+            if (_selectedPage != _pages.length - 1)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_pages.length - 1 == _selectedPage) return;
+                    _onPageChangeForward(true);
+                  },
+                  child: Text(_selectedPage == 0 ? "Start" : "Next"),
+                ),
               ),
-            ),
             const SizedBox(height: 10),
           ],
         ),
