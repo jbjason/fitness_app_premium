@@ -70,7 +70,7 @@ abstract class AppTheme {
         ),
         scaffoldBackgroundColor: Colors.white,
         cardColor: AppColors.cardLight,
-        iconTheme: const IconThemeData(color: AppColors.iconDark),
+        iconTheme: const IconThemeData(color: MyColor.bluePrimary),
         appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white, size: 20),
           backgroundColor: MyColor.skyPrimary,
