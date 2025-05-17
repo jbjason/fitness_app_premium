@@ -1,4 +1,5 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/core/util/my_dimens.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,14 @@ class _Onboard4TargetState extends State<Onboard4Target> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 8),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
+                            gradient: selectedIndex == index
+                                ? MyDimens().orageGradient
+                                : MyDimens.bodyGradient,
+                            boxShadow: MyDimens().bodyShadow,
                             border: Border.all(
                               color: selectedIndex == index
                                   ? MyColor.accentColor
@@ -116,20 +122,19 @@ class _Onboard4TargetState extends State<Onboard4Target> {
                             _goals[index]['description'] != '')
                           Container(
                             padding: const EdgeInsets.all(20),
-                            margin: EdgeInsets.symmetric(vertical: 10),
+                            margin: EdgeInsets.only(
+                                left: 15, right: 15, top: 5, bottom: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[100],
+                              color: MyColor.bodyHintBoxColor
                             ),
                             child: RichText(
                               text: TextSpan(
                                 children: [
                                   TextSpan(
                                     text:
-                                        "${_goals[index]['subtitle'] ?? ""}\n",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                        "${_goals[index]['subtitle'] ?? ""}\n\n",
+                                    style: Theme.of(context).textTheme.bodyLarge,
                                   ),
                                   TextSpan(
                                     text: _goals[index]['description'] ?? "",

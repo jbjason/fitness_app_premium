@@ -64,3 +64,15 @@ flutter:
     - family: Poppins_Black
       fonts:
         - asset: assets/fonts/poppins/Poppins-Black.ttf
+
+    - family: Libre_Regular
+      fonts:
+        - asset: assets/fonts/Libre-Regular.ttf
+
+    - family: Libre_Bold
+      fonts:
+        - asset: assets/fonts/Libre-Bold.ttf
+
+    - family: ShareTech_Regular
+      fonts:
+        - asset: assets/fonts/ShareTech-Regular.ttf

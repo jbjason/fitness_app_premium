@@ -20,9 +20,9 @@ class _Onboard8CompleteState extends State<Onboard8Complete>
     if (mounted) {
       _controller = AnimationController(
         vsync: this,
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 2),
       )..forward().then((_) {
-        _controller.stop();
+          _controller.stop();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => HomeScreen()),
@@ -40,71 +40,74 @@ class _Onboard8CompleteState extends State<Onboard8Complete>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 40),
-              const CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(MyImage.trainerImg),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "Generating your daily schedule...",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 30),
-              Spacer(),
-              SizedBox(
-                width: context.screenWidth * .6,
-                height: context.screenWidth * .6,
-                child: CustomPaint(
-                  painter: CirclePainter(_controller),
-                  child: Center(
-                    child: Text(
-                      "${(_controller.value * 100).toInt()}%",
-                      style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w900,
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40),
+                const CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage(MyImage.trainerImg),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Generating your daily schedule...",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 30),
+                Spacer(),
+                SizedBox(
+                  width: context.screenWidth * .6,
+                  height: context.screenWidth * .6,
+                  child: CustomPaint(
+                    painter: CirclePainter(_controller),
+                    child: Center(
+                      child: Text(
+                        "${(_controller.value * 100).toInt()}%",
+                        style: const TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Spacer(),
-              AnimatedOpacity(
-                opacity: 1 - (_controller.value).clamp(0, .8),
-                duration: const Duration(milliseconds: 300),
-                child: ListTile(
-                  leading: Icon(Icons.check, color: Colors.green),
-                  title: Text(
-                    'Generating the schedule for Intermediate',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color:
-                          _controller.value >= 1.0 ? Colors.black : Colors.grey,
+                Spacer(),
+                AnimatedOpacity(
+                  opacity: 1 - (_controller.value).clamp(0, .8),
+                  duration: const Duration(milliseconds: 300),
+                  child: ListTile(
+                    leading: Icon(Icons.check, color: Colors.green),
+                    title: Text(
+                      'Generating the schedule for Intermediate',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: _controller.value >= 1.0
+                            ? Colors.black
+                            : Colors.grey,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              AnimatedOpacity(
-                opacity: 1 * _controller.value,
-                duration: const Duration(milliseconds: 500),
-                child: ListTile(
-                  leading: Icon(Icons.check, color: Colors.green),
-                  title: Text(
-                    'Your plan is ready!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
+                AnimatedOpacity(
+                  opacity: 1 * _controller.value,
+                  duration: const Duration(milliseconds: 500),
+                  child: ListTile(
+                    leading: Icon(Icons.check, color: Colors.green),
+                    title: Text(
+                      'Your plan is ready!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-            ],
+                const SizedBox(height: 40),
+              ],
+            ),
           );
         },
       ),

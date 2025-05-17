@@ -1,4 +1,5 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/core/util/my_dimens.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,41 +15,44 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Title
-        Text(
-          'Choose your plan',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 20),
-        // Info Card
-        Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.blue[50],
-            borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title
+          Text(
+            'Choose your plan',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          child: Row(
-            children: [
-              Icon(Icons.track_changes, color: Colors.redAccent),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'Your coach will design a weight loss plan for you to suit you best',
-                  style: TextStyle(fontSize: 14),
+          SizedBox(height: 20),
+          // Info Card
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: MyColor.bodyHintBoxColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.track_changes, color: Colors.redAccent),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Your coach will design a weight loss plan for you to suit you best',
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 20),
-        // Plan Options
-        _buildPlanOption(0, 'Beginner', '5-10 min a day'),
-        _buildPlanOption(1, 'Intermediate', '10-20 min a day'),
-        _buildPlanOption(2, 'Advanced', '15-30 min a day'),
-      ],
+          SizedBox(height: 20),
+          // Plan Options
+          _buildPlanOption(0, 'Beginner', '5-10 min a day'),
+          _buildPlanOption(1, 'Intermediate', '10-20 min a day'),
+          _buildPlanOption(2, 'Advanced', '15-30 min a day'),
+        ],
+      ),
     );
   }
 
@@ -61,10 +65,11 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
         data.setPlan(index);
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 15),
+        margin: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          gradient: MyDimens.bodyGradient,
+          boxShadow: MyDimens().bodyShadow,
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: _selectedPlan == index ? MyColor.accentColor : Colors.white,
             width: 2,

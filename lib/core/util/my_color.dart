@@ -22,4 +22,5 @@ class MyColor {
 
   static const primaryColor = Colors.deepOrange;
   static const accentColor = Colors.orange;
+  static const bodyHintBoxColor = Color(0xFFE3F2FD);
 }

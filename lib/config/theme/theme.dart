@@ -24,36 +24,51 @@ abstract class AppTheme {
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             color: MyColor.textColor,
-            fontFamily: MyString.poppinsMedium,
+            fontFamily: MyString.libreBold,
             fontSize: 28,
           ),
           titleMedium: TextStyle(
             color: MyColor.textColor,
-            fontSize: 16,
-            fontFamily: MyString.poppinsMedium,
+            fontSize: 22,
+            fontFamily: MyString.libreBold,
           ),
           titleSmall: TextStyle(
-            fontSize: 12,
+            fontSize: 18,
             color: MyColor.textColor,
-            fontFamily: MyString.poppinsRegular,
+            fontFamily: MyString.libreBold,
           ),
           bodyLarge: TextStyle(
             fontSize: 14,
             color: MyColor.textColor,
-            fontFamily: MyString.rubikRegular,
+            fontFamily: MyString.libreRegular,
           ),
           bodyMedium: TextStyle(
             fontSize: 11,
             color: MyColor.textColor,
-            fontFamily: MyString.rubikRegular,
+            fontFamily: MyString.libreRegular,
           ),
           bodySmall: TextStyle(
             fontSize: 9,
             color: MyColor.textColor,
-            fontFamily: MyString.rubikRegular,
+            fontFamily: MyString.libreRegular,
+          ),
+          labelLarge: TextStyle(
+            fontSize: 16,
+            color: MyColor.textColor,
+            fontFamily: MyString.sherifTechRegular,
+          ),
+          labelMedium: TextStyle(
+            fontSize: 14,
+            color: MyColor.textColor,
+            fontFamily: MyString.sherifTechRegular,
+          ),
+          labelSmall: TextStyle(
+            fontSize: 11,
+            color: MyColor.textColor,
+            fontFamily: MyString.sherifTechRegular,
           ),
         ),
-        scaffoldBackgroundColor: MyColor.ashhLight,// Colors.white,
+        scaffoldBackgroundColor: Colors.white,
         cardColor: AppColors.cardLight,
         iconTheme: const IconThemeData(color: AppColors.iconDark),
         appBarTheme: const AppBarTheme(
@@ -131,7 +146,7 @@ abstract class AppTheme {
               ),
             ),
             padding: WidgetStateProperty.all(
-              const EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             ),
             backgroundColor: WidgetStateProperty.all(MyColor.primaryColor),
             foregroundColor: WidgetStateProperty.all(Colors.white),

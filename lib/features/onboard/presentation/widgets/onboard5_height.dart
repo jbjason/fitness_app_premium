@@ -25,7 +25,6 @@ class _Onboard5HeightState extends State<Onboard5Height> {
     // setting ft & inches as  feet.inches
     final data = Provider.of<OnboardProvider>(context, listen: false);
     data.setHeight(feet + (12 * remainingInches / 100));
-    print("${feet + (12 * remainingInches / 100)}---------");
     return "${feet}ft ${remainingInches}inch";
   }
 
@@ -43,6 +42,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: _buildHeightCalculator(context),
     );
   }
@@ -81,11 +81,11 @@ class _Onboard5HeightState extends State<Onboard5Height> {
         ),
         _buildLinearWidgetPointer(
           value: _pointerValue,
-          offset: context.screenWidth * .8 - 100,
+          offset: context.screenWidth * .75 - 100,
           position: LinearElementPosition.outside,
           child: Container(
-            width: 60,
-            height: 25,
+            width: 100,
+            height: 30,
             decoration: BoxDecoration(
               color: const Color(0xffFFFFFF),
               boxShadow: const <BoxShadow>[

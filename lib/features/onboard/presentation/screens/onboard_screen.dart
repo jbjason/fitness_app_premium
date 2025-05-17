@@ -1,5 +1,4 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard1_welcome.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard2_gender.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard3_plan.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard4_target.dart';
@@ -18,7 +17,6 @@ class OnboardScreen extends StatefulWidget {
 class _OnboardScreenState extends State<OnboardScreen> {
   final _controller = PageController(keepPage: true);
   final _pages = [
-    Onboard1Welcome(),
     Onboard2Gender(),
     Onboard3Plan(),
     Onboard4Target(),
@@ -36,7 +34,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
         child: Column(
           children: [
             // progressBar & backButton
-            if (_selectedPage != 0) _getProgressBarAndBackButton,
+            _getProgressBarAndBackButton,
             const SizedBox(height: 30),
             // pages
             Expanded(
@@ -60,7 +58,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                     if (_pages.length - 1 == _selectedPage) return;
                     _onPageChangeForward(true);
                   },
-                  child: Text(_selectedPage == 0 ? "Start" : "Next"),
+                  child: Text("Next"),
                 ),
               ),
             const SizedBox(height: 10),
@@ -70,9 +68,12 @@ class _OnboardScreenState extends State<OnboardScreen> {
     );
   }
 
-  void _onPageChangeForward(bool isForward) {
+  void _onPageChangeForward(bool isForward) async {
     _selectedPage = isForward ? _selectedPage + 1 : _selectedPage - 1;
     setState(() {});
+    if (_selectedPage == 0) {
+      await Future.delayed(Duration(milliseconds: 2500));
+    }
     _controller.animateToPage(_selectedPage,
         duration: Duration(milliseconds: 200), curve: Curves.linear);
   }
@@ -82,12 +83,13 @@ class _OnboardScreenState extends State<OnboardScreen> {
       children: [
         // backButton
         // for first page we don't need backBUtton
-        _selectedPage == 1
-            ? SizedBox()
-            : IconButton(
-                onPressed: () => _onPageChangeForward(false),
-                icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
-              ),
+        // _selectedPage == 1
+        //     ? SizedBox()
+        //     :
+        IconButton(
+          onPressed: () => _onPageChangeForward(false),
+          icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
+        ),
         const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,7 +6,7 @@ class OnboardProvider with ChangeNotifier {
   int _selectedTarget = 0;
   double _selectedHeight = 5.0;
   double _selectedWeight = 60.0;
-  double _selectedTargetWeight = 60.0;
+  double _selectedTargetWeight = 55.0;
 
   int get selectedGender => _selectedGender;
   int get selectedPlan => _selectedPlan;

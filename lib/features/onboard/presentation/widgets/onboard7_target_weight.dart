@@ -11,7 +11,7 @@ class Onboard7TargetWeight extends StatefulWidget {
 }
 
 class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
-  double _pointerValue = 60.0;
+  double _pointerValue = 55.0;
   final double _minimumWeight = 20.0;
   final double _maximumWeight = 180.0;
 
@@ -93,19 +93,31 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
 
         const SizedBox(height: 40),
         Container(
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
+            color: MyColor.bodyHintBoxColor,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("👌 REASONABLE GOAL!"),
-              const SizedBox(height: 10),
-              Text("You will $_getLoasingWeightPercent of body weight"),
               Text(
-                  "Moderate weight loss can alse make a big difference:\n- Lower blood pressure\n- Reduce the risk of type 2 diabetes"),
+                "👌 REASONABLE GOAL!",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "You will $_getLoasingWeightPercent of body weight\n",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                  "Moderate weight loss can alse make a big difference:\n\n- Lower blood pressure\n\n- Reduce the risk of type 2 diabetes"),
             ],
           ),
         )
