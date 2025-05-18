@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
+import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:fitness_app_premium/features/profile/presentation/widgets/profile_appbar.dart';
-import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -155,7 +158,10 @@ class PostSection extends StatelessWidget {
                 title: Text('This adorable cat with its guitar...'),
                 subtitle: Text('2 Days ago'),
               ),
-              Image.asset(MyImage.maleModelImg,height: 200,),
+              Image.asset(
+                MyImage.maleModelImg,
+                height: 200,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 child: Row(
@@ -188,7 +194,6 @@ class PostSection extends StatelessWidget {
 
 // class CustomNavBar extends StatelessWidget {
 //   const CustomNavBar({super.key});
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
@@ -219,27 +224,40 @@ class ProfileNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      height: kBottomNavigationBarHeight*2,
+    return SizedBox(
+      height: kBottomNavigationBarHeight * 1.9,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           // Background with Custom Painter
           Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
+            bottom: -5,
+            top: 0,
+            left: 6,
+            right: 6,
             child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width, 80),
-              painter: BottomNavPainter(),
+              size: Size(MediaQuery.of(context).size.width,
+                  kBottomNavigationBarHeight * 1.8),
+              painter: BottomNavPainter(
+                  color: MyColor.accentColor, style: PaintingStyle.stroke),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 10,
+            right: 10,
+            child: CustomPaint(
+              size: Size(MediaQuery.of(context).size.width,
+                  kBottomNavigationBarHeight * 1.8),
+              painter: BottomNavPainter(
+                  color: Colors.grey[850]!, style: PaintingStyle.fill),
             ),
           ),
           // Icons
           Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
+            bottom: 30,
+            left: 10,
+            right: 10,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -253,12 +271,13 @@ class ProfileNavbar extends StatelessWidget {
           ),
           // Center Circular Button
           Positioned(
-            bottom: 35,
+            bottom: 25,
             child: Container(
-              height: 60,
-              width: 60,
+              height: 75,
+              width: 75,
+              padding: EdgeInsets.all(2.5),
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -268,7 +287,14 @@ class ProfileNavbar extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Icon(Icons.pets, color: Colors.white, size: 30),
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  color: MyColor.bluePrimary,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.pets, color: Colors.white, size: 30),
+              ),
             ),
           ),
         ],
@@ -278,27 +304,41 @@ class ProfileNavbar extends StatelessWidget {
 }
 
 class BottomNavPainter extends CustomPainter {
+  final Color color;
+  final PaintingStyle style;
+  const BottomNavPainter({required this.color, required this.style});
+
   @override
   void paint(Canvas canvas, Size size) {
+    double h = size.height, w = size.width;
     final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
+      ..color = color
+      ..strokeWidth = 2
+      ..style = style;
 
     final path = Path();
-    path.moveTo(0, 20);
-    path.quadraticBezierTo(size.width * 0.25, 0, size.width * 0.4, 0);
-    path.quadraticBezierTo(size.width * 0.5, 0, size.width * 0.5, 20);
-    path.arcToPoint(
-      Offset(size.width * 0.6, 20),
-      radius: Radius.circular(20),
-      clockwise: false,
-    );
-    path.quadraticBezierTo(size.width * 0.75, 0, size.width, 20);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
+    path.moveTo(0, h / 2);
+    path.cubicTo(0, -h * .3, w * .35, h * .35, w * .5, h * .27);
+    path.cubicTo(w * .65, h * .32, w, -h * .3, w, h / 2);
+    path.cubicTo(w, h * 1.15, w * .8, h * .85, w * .5, h * .85);
+    path.cubicTo(w * .3, h * .8, 0, h * 1.15, 0, h / 2);
     path.close();
-
     canvas.drawPath(path, paint);
+
+    // h = size.height;
+    // w = size.width;
+    // final paint2 = Paint()
+    //   ..color = Colors.orange
+    //   ..strokeWidth = 2
+    //   ..style = PaintingStyle.stroke;
+    // final path2 = Path();
+    // path2.moveTo(0, h / 2);
+    // path2.cubicTo(0, -h * .3, w * .35, h * .35, w * .5, h * .27);
+    // path2.cubicTo(w * .65, h * .32, w, -h * .3, w, h / 2);
+    // path2.cubicTo(w, h * 1.15, w * .8, h * .85, w * .5, h * .85);
+    // path2.cubicTo(w * .3, h * .8, 0, h * 1.15, 0, h / 2);
+    // path2.close();
+    // canvas.drawPath(path2, paint2);
   }
 
   @override
