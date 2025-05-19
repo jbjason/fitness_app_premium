@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Image
                 CircleAvatar(
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(height: 20),
                 // Subtitle Text
                 RichText(
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   text: TextSpan(
                     style: TextStyle(fontSize: 16, color: Colors.black),
                     children: <TextSpan>[
@@ -61,51 +61,43 @@ class _SplashScreenState extends State<SplashScreen> {
                               ),
                       TextSpan(
                         text: 'personalize',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(color: MyColor.primaryColor),
+                        style: TextStyle(color: MyColor.primaryColor),
                       ),
                       TextSpan(text: ' your daily'),
                       TextSpan(
                         text: ' goal',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(color: MyColor.primaryColor),
+                        style: TextStyle(color: MyColor.primaryColor),
                       ),
                       TextSpan(text: ' and '),
                       TextSpan(
                         text: 'schedule',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(color: MyColor.primaryColor),
+                        style: TextStyle(color: MyColor.primaryColor),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () {
-                      setState(() => _isAnimationStart = false);
-                      Future.delayed(Duration(milliseconds: 2500)).then((_) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => OnboardScreen()),
-                        );
-                      });
-                    },
-                    style: ButtonStyle(
-                      padding: WidgetStateProperty.all(
-                        EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      onPressed: () {
+                        setState(() => _isAnimationStart = false);
+                        Future.delayed(Duration(milliseconds: 2500)).then((_) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => OnboardScreen()),
+                          );
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                        ),
                       ),
+                      child: const Text("Start"),
                     ),
-                    child: const Text("Start"),
-                  ),
                 ),
+               
               ],
             ),
           ),

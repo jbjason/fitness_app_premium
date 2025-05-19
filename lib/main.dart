@@ -1,5 +1,6 @@
 import 'package:fitness_app_premium/config/theme/theme.dart';
 import 'package:fitness_app_premium/features/auth/presentation/screens/auth_screen.dart';
+import 'package:fitness_app_premium/features/home/presentation/screens/home_screen.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:fitness_app_premium/features/profile/presentation/screens/profile_screen.dart';
 import 'package:fitness_app_premium/features/splash/presentation/screens/splash_screen.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
-        home: const ProfileScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

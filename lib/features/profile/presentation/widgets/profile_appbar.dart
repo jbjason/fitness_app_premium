@@ -1,4 +1,3 @@
-import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,6 @@ class ProfileAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = context.screenHeight;
-    final width = context.screenWidth;
     return Column(
       children: [
         Stack(

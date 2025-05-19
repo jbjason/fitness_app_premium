@@ -24,16 +24,23 @@ class _Onboard7TargetWeightState extends State<Onboard7TargetWeight> {
         Text(
           "What's your target weight?",
           textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 40),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(),
-            Text("${_pointerValue.toStringAsFixed(1)} kg",
-                textAlign: TextAlign.center),
-            Text("${data.selectedWeight.toStringAsFixed(1)} kg",
-                textAlign: TextAlign.center),
+            Text(
+              "${_pointerValue.toStringAsFixed(1)} kg",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              "<- ${data.selectedWeight.toStringAsFixed(1)} kg",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           ],
         ),
         // Syncfusion Gauge

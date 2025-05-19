@@ -25,10 +25,14 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
           Text(
             "What's your current weight?",
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 40),
-          Text("${_pointerValue.toStringAsFixed(1)} kg",
-              textAlign: TextAlign.center),
+          Text(
+            "${_pointerValue.toStringAsFixed(1)} kg",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           // Syncfusion Gauge
           SfLinearGauge(
             minimum: _minimumWeight,
@@ -39,7 +43,7 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
             orientation: LinearGaugeOrientation.horizontal,
             axisTrackStyle: const LinearAxisTrackStyle(
               color: Color(0xFFE0E0E0),
-              thickness: 15,
+              thickness: 40,
             ),
             ranges: <LinearGaugeRange>[
               LinearGaugeRange(
@@ -105,13 +109,10 @@ class _Onboard6WeightState extends State<Onboard6Weight> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Text(
-                      _getBMI.toStringAsFixed(1),
-                      style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontWeight: FontWeight.bold,color: MyColor.primaryColor)
-                    ),
+                    Text(_getBMI.toStringAsFixed(1),
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: MyColor.primaryColor)),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Text(

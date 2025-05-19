@@ -79,17 +79,16 @@ class _OnboardScreenState extends State<OnboardScreen> {
   }
 
   Widget get _getProgressBarAndBackButton {
+   // if (_selectedPage == _pages.length - 1) return SizedBox();
     return Row(
       children: [
         // backButton
         // for first page we don't need backBUtton
-        // _selectedPage == 1
-        //     ? SizedBox()
-        //     :
-        IconButton(
-          onPressed: () => _onPageChangeForward(false),
-          icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
-        ),
+        if (_selectedPage != 0)
+          IconButton(
+            onPressed: () => _onPageChangeForward(false),
+            icon: Icon(Icons.arrow_back_ios_new, color: MyColor.textColor),
+          ),
         const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

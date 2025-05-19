@@ -13,7 +13,7 @@ class Onboard5Height extends StatefulWidget {
 }
 
 class _Onboard5HeightState extends State<Onboard5Height> {
-  double _pointerValue = 152; // Start from 4ft
+  double _pointerValue = 152; // Start from 5ft
   final double _minimumLevel = 122; // 4ft in cm
   final double _maximumLevel = 213; // 7ft in cm
 
@@ -48,6 +48,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
   }
 
   Widget _buildHeightCalculator(BuildContext context) {
+    final data = Provider.of<OnboardProvider>(context,listen: false);
     return SfLinearGauge(
       orientation: LinearGaugeOrientation.vertical,
       minimum: _minimumLevel,
@@ -116,7 +117,7 @@ class _Onboard5HeightState extends State<Onboard5Height> {
           child: Image.asset(
             width: 30,
             height: 60,
-            MyImage.femaleModelImg,
+           data.selectedGender == 0 ? MyImage.maleModelImg : MyImage.femaleModelImg,
             fit: BoxFit.fitHeight,
           ),
         ),

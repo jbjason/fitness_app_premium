@@ -12,6 +12,4 @@ class AuthScreen extends StatelessWidget {
       body: Center(child: AuhtBody()),
     );
   }
-
-
 }
