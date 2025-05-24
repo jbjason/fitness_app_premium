@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           height: context.screenHeight,
           width: context.screenWidth,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,31 +46,29 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   'Hello, \nwelcome to the journey \nto your dream body',
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleLarge!,
                 ),
                 SizedBox(height: 20),
                 // Subtitle Text
                 RichText(
                   textAlign: TextAlign.start,
                   text: TextSpan(
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
                     children: <TextSpan>[
                       TextSpan(
-                          text:
-                              'Here comes a few simple questionsbefore we can ',
-                              ),
+                        text:
+                            'Here comes a few simple questions before we can ',
+                      ),
                       TextSpan(
                         text: 'personalize',
                         style: TextStyle(color: MyColor.primaryColor),
                       ),
                       TextSpan(text: ' your daily'),
                       TextSpan(
-                        text: ' goal',
-                        style: TextStyle(color: MyColor.primaryColor),
-                      ),
-                      TextSpan(text: ' and '),
-                      TextSpan(
-                        text: 'schedule',
+                        text: ' goal and schedule',
                         style: TextStyle(color: MyColor.primaryColor),
                       ),
                     ],
@@ -80,24 +78,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                      onPressed: () {
-                        setState(() => _isAnimationStart = false);
-                        Future.delayed(Duration(milliseconds: 2500)).then((_) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => OnboardScreen()),
-                          );
-                        });
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all(
-                          EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-                        ),
+                    onPressed: () {
+                      setState(() => _isAnimationStart = false);
+                      Future.delayed(Duration(milliseconds: 2500)).then((_) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => OnboardScreen()),
+                        );
+                      });
+                    },
+                    style: ButtonStyle(
+                      padding: WidgetStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                       ),
-                      child: const Text("Start"),
                     ),
+                    child: const Text("Start"),
+                  ),
                 ),
-               
               ],
             ),
           ),

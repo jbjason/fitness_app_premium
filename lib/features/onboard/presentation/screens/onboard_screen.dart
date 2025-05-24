@@ -7,6 +7,7 @@ import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboar
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard7_target_weight.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard8_complete.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -29,12 +30,14 @@ class _OnboardScreenState extends State<OnboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print( "OnboardScreen rebuild");
+    print(_pages.length);
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             // progressBar & backButton
-            _getProgressBarAndBackButton,
+              _getProgressBarAndBackButton,
             const SizedBox(height: 30),
             // pages
             Expanded(
@@ -49,15 +52,12 @@ class _OnboardScreenState extends State<OnboardScreen> {
               ),
             ),
             // next button
-            if (_selectedPage != _pages.length - 1)
+            if (_selectedPage != _pages.length-1)
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 15),
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_pages.length - 1 == _selectedPage) return;
-                    _onPageChangeForward(true);
-                  },
+                  onPressed: () => _onPageChangeForward(true),
                   child: Text("Next"),
                 ),
               ),
@@ -71,15 +71,13 @@ class _OnboardScreenState extends State<OnboardScreen> {
   void _onPageChangeForward(bool isForward) async {
     _selectedPage = isForward ? _selectedPage + 1 : _selectedPage - 1;
     setState(() {});
-    if (_selectedPage == 0) {
-      await Future.delayed(Duration(milliseconds: 2500));
-    }
+    Logger().w("Selected Page: $_selectedPage");
     _controller.animateToPage(_selectedPage,
         duration: Duration(milliseconds: 200), curve: Curves.linear);
   }
 
   Widget get _getProgressBarAndBackButton {
-   // if (_selectedPage == _pages.length - 1) return SizedBox();
+    // if (_selectedPage == _pages.length - 1) return SizedBox();
     return Row(
       children: [
         // backButton

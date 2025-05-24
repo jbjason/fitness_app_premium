@@ -24,8 +24,8 @@ class ProfileAppbar extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: 15,
-                right: 15,
+                left: 20,
+                right: 20,
                 top: MediaQuery.of(context).padding.top + 10,
                 bottom: 20,
               ),
@@ -35,24 +35,7 @@ class ProfileAppbar extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: Colors.white,
-                        ),
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
-                            border: Border.all(
-                                width: 2, color: MyColor.accentColor),
-                          ),
-                          child: Icon(Icons.arrow_back_ios, size: 18),
-                        ),
-                      ),
+                      SizedBox(),
                       Text("Profile"),
                       Container(
                         padding: EdgeInsets.all(2),

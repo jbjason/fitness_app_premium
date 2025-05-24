@@ -38,17 +38,17 @@ abstract class AppTheme {
             fontFamily: MyString.libreBold,
           ),
           bodyLarge: TextStyle(
-            fontSize: 14,
+            fontSize: 17,
             color: MyColor.textColor,
             fontFamily: MyString.libreRegular,
           ),
           bodyMedium: TextStyle(
-            fontSize: 11,
+            fontSize: 14,
             color: MyColor.textColor,
             fontFamily: MyString.libreRegular,
           ),
           bodySmall: TextStyle(
-            fontSize: 9,
+            fontSize: 11,
             color: MyColor.textColor,
             fontFamily: MyString.libreRegular,
           ),
