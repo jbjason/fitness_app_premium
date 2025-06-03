@@ -21,7 +21,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
     InventoryItem(
       id: "",
       productTitle: "Tester Product BD",
-      supplier: "Tata",
+      supplier: "777",
       barCode: "854Hgf4",
       amount: "5",
       type: "10",
@@ -30,7 +30,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
     InventoryItem(
       id: "",
       productTitle: "Tester Product BD",
-      supplier: "Tata",
+      supplier: "555",
       barCode: "854Hgf4",
       amount: "80",
       type: "100",
@@ -39,7 +39,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
     InventoryItem(
       id: "",
       productTitle: "Tester Product BD",
-      supplier: "Tata",
+      supplier: "999",
       barCode: "674Hf4",
       amount: "50",
       type: "200",
@@ -48,7 +48,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
     InventoryItem(
       id: "",
       productTitle: "Tester Product BD",
-      supplier: "Tata",
+      supplier: "111",
       barCode: "854Hgf4",
       amount: "80",
       type: "30",
