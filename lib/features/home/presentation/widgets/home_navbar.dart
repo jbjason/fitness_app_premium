@@ -73,7 +73,7 @@ class HomeNavbar extends StatelessWidget {
                     : _getNavBarItem(
                         index: i,
                         color: currentPage == i
-                            ? MyColor.accentColor
+                            ? Colors.white
                             : Colors.grey,
                         img: currentPage == i
                             ? navItemSelectedImages[i]
@@ -106,7 +106,7 @@ class HomeNavbar extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints.expand(),
                 decoration: BoxDecoration(
-                  color: MyColor.bluePrimary,
+                  color: MyColor.accentColor,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(Icons.pets, color: Colors.white, size: 30),
@@ -135,6 +135,7 @@ class HomeNavbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(img, width: imgWidth, color: color),
+              const SizedBox(height: 3),
               FittedBox(
                 child: Text(
                   title,
@@ -163,10 +164,10 @@ class BottomNavPainter extends CustomPainter {
 
     final path = Path();
     path.moveTo(0, h / 2);
-    path.cubicTo(0, -h * .3, w * .35, h * .35, w * .5, h * .27);
+    path.cubicTo(-10, -h * .3, w * .35, h * .25, w * .5, h * .2);
     path.cubicTo(w * .65, h * .32, w, -h * .3, w, h / 2);
     path.cubicTo(w, h * 1.15, w * .8, h * .85, w * .5, h * .85);
-    path.cubicTo(w * .3, h * .8, 0, h * 1.15, 0, h / 2);
+    path.cubicTo(w * .3, h * .8, -10, h * 1.2, 0, h / 2);
     path.close();
     canvas.drawPath(path, paint);
 
