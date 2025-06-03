@@ -72,7 +72,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                           EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                       color: textThirdColor,
                       child: Text(
-                        "বিক্রিত পণ্য ফেরত দেওয়া যাবে না। কিন্তু যদি পণ্যের প্যাকেট ক্ষতিগ্রস্ত হয় তাহলে তা ফেরত দেওয়া যেতে পারে।",
+                        "বিক্রিত মাল/পার্টস নষ্ট না হলে ফেরত নেওয়া হয়। কিন্তু যদি পণ্যের প্যাকেট ক্ষতিগ্রস্ত হয় তাহলে তা ফেরত দেওয়া হয় না।",
                         style: TextStyle(
                           color: textHeightColor,
                             fontWeight: FontWeight.bold, fontSize: 11),
