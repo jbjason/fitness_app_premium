@@ -1,4 +1,3 @@
-import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/momen_vhai/widgets/cm_text_field.dart';
 import 'package:fitness_app_premium/momen_vhai/widgets/inventory_contacts.dart';
 import 'package:fitness_app_premium/momen_vhai/widgets/inventory_table_charts.dart';
@@ -58,15 +57,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     const SizedBox(height: 15),
                     InventoryTableCharts(),
                     const SizedBox(height: 15),
-                    SizedBox(
-                      width: context.screenWidth,
-                      child: CmTextField(
-                        title: "ঠিকানা:",
-                        controller: _amountInWordsController,
-                        width: 300,
-                      ),
+                    CmTextField(
+                      title: "ঠিকানা:",
+                      controller: _amountInWordsController,
+                      width: null,
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
                     Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -74,8 +70,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       child: Text(
                         "বিক্রিত মাল/পার্টস নষ্ট না হলে ফেরত নেওয়া হয়। কিন্তু যদি পণ্যের প্যাকেট ক্ষতিগ্রস্ত হয় তাহলে তা ফেরত দেওয়া হয় না।",
                         style: TextStyle(
-                          color: textHeightColor,
-                            fontWeight: FontWeight.bold, fontSize: 11),
+                            color: textHeightColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11),
                       ),
                     ),
                     const SizedBox(height: 5),

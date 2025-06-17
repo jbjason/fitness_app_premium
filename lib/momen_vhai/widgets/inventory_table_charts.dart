@@ -102,7 +102,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: Text("Add Product"),
+              child: Text("যোগ করুন"),
             ),
             Spacer(),
             SizedBox(
@@ -263,10 +263,11 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
                   // titlte
                   Center(
                     child: Text(
-                      'Add Product',
+                      'পণ্য যোগ করুন',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
+                  Divider(),
                   const SizedBox(height: 20),
                   CmTextField(
                     title: "মালের বিবরণ",
@@ -313,10 +314,10 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 50),
                   ElevatedButton(
                     onPressed: _onAddProduct,
-                    child: Text("Add"),
+                    child: Text("যোগ করুন"),
                   ),
                 ],
               ),

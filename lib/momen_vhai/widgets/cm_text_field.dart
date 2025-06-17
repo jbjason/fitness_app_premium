@@ -47,7 +47,7 @@ class _DottedLinePainter extends CustomPainter {
   const _DottedLinePainter({
     this.color = Colors.grey,
     this.strokeWidth = 2.0,
-    this.dashWidth = 2.0,
+    this.dashWidth = 3.0,
     this.dashSpace = 3.0,
   });
 
