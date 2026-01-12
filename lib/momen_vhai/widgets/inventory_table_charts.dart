@@ -298,6 +298,7 @@ class _InventoryTableChartsState extends State<InventoryTableCharts> {
                         child: CmTextField(
                           title: "পরিমাণ",
                           controller: _amountController,
+                          width: 120,
                         ),
                       ),
                       Expanded(
