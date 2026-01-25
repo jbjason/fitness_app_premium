@@ -45,6 +45,37 @@ class _Onboard4TargetState extends State<Onboard4Target> {
     },
   ];
 
+  final List<Map<String, String>> _menGoals = [
+  {
+    'title': 'Lose Weight & Get Lean',
+    'subtitle': '🔥 Burn fat, stay sharp!',
+    'description':
+        'Drop excess fat, boost your energy, and feel lighter every day with a plan built for men.',
+    'image': MyImage.loseWeightImg,
+  },
+  {
+    'title': 'Build Muscle & Strength',
+    'subtitle': '💪 Stronger every rep!',
+    'description':
+        'Gain solid muscle and real strength with structured workouts designed for maximum results.',
+    'image': MyImage.buildMuscleImg,
+  },
+  {
+    'title': 'Lose Belly Fat',
+    'subtitle': '🚫 Crush the dad belly!',
+    'description':
+        'Target stubborn belly fat and reveal a stronger, tighter core with focused routines.',
+    'image': MyImage.bellyFatImg,
+  },
+  {
+    'title': 'Get Athletic & Fit',
+    'subtitle': '⚡ Move better, feel faster!',
+    'description':
+        'Improve endurance, agility, and overall fitness to perform better in daily life and sports.',
+    'image': MyImage.athleticImg,
+  },
+];
+
   @override
   Widget build(BuildContext context) {
     return Column(

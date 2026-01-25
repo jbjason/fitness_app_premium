@@ -72,15 +72,13 @@ class HomeNavbar extends StatelessWidget {
                     ? SizedBox(width: 20)
                     : _getNavBarItem(
                         index: i,
-                        color: currentPage == i
-                            ? Colors.white
-                            : Colors.grey,
+                        color: currentPage == i ? Colors.white : Colors.grey,
                         img: currentPage == i
                             ? navItemSelectedImages[i]
                             : navItemImages[i],
                         imgWidth: 21,
                         title: navItemTitles[i],
-                        width: context.screenWidth-30 / navItemTitles.length,
+                        width: context.screenWidth - 30 / navItemTitles.length,
                       ),
               ),
             ),
@@ -118,14 +116,13 @@ class HomeNavbar extends StatelessWidget {
     );
   }
 
-  Widget _getNavBarItem({
-    required int index,
-    required Color color,
-    required String img,
-    required double imgWidth,
-    required String title,
-    required double width
-  }) =>
+  Widget _getNavBarItem(
+          {required int index,
+          required Color color,
+          required String img,
+          required double imgWidth,
+          required String title,
+          required double width}) =>
       GestureDetector(
         onTap: () => onPageChange(index),
         child: Container(
