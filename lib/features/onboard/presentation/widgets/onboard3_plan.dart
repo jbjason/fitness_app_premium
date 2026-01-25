@@ -1,7 +1,7 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/core/util/my_dimens.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Onboard3Plan extends StatefulWidget {
@@ -15,89 +15,154 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title
-          Text(
-            'Choose your plan',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        // Title
+        Text(
+          'Choose Your Plan',
+          style: TextStyle(
+            fontSize: 26.sp,
+            fontWeight: FontWeight.bold,
+            color: MyColor.textColor,
+            letterSpacing: 0.5,
           ),
-          SizedBox(height: 20),
-          // Info Card
-          Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: MyColor.bodyHintBoxColor,
-              borderRadius: BorderRadius.circular(10),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 10.h),
+
+        // Subtitle / Info
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Text(
+            'Your coach will design a weight loss plan\nthat suits your lifestyle best.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.grey[600],
+              height: 1.5,
             ),
-            child: Row(
+          ),
+        ),
+        SizedBox(height: 30.h),
+
+        // Plan Options List
+        Expanded(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                Icon(Icons.track_changes, color: Colors.redAccent),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    'Your coach will design a weight loss plan for you to suit you best',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
+                _buildPlanOption(0, 'Beginner', '5-10 min a day',
+                    Icons.accessibility_new_rounded),
+                SizedBox(height: 15.h),
+                _buildPlanOption(1, 'Intermediate', '10-20 min a day',
+                    Icons.fitness_center_rounded),
+                SizedBox(height: 15.h),
+                _buildPlanOption(2, 'Advanced', '15-30 min a day',
+                    Icons.local_fire_department_rounded),
               ],
             ),
           ),
-          SizedBox(height: 20),
-          // Plan Options
-          _buildPlanOption(0, 'Beginner', '5-10 min a day'),
-          _buildPlanOption(1, 'Intermediate', '10-20 min a day'),
-          _buildPlanOption(2, 'Advanced', '15-30 min a day'),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   // Plan Card Builder
-  Widget _buildPlanOption(int index, String plan, String duration) {
+  Widget _buildPlanOption(
+      int index, String plan, String duration, IconData iconData) {
+    final bool isSelected = _selectedPlan == index;
+
     return GestureDetector(
       onTap: () {
-        setState(() => _selectedPlan = index);
-        final data = Provider.of<OnboardProvider>(context, listen: false);
-        data.setPlan(index);
+        if (_selectedPlan != index) {
+          setState(() => _selectedPlan = index);
+          final data = Provider.of<OnboardProvider>(context, listen: false);
+          data.setPlan(index);
+        }
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         decoration: BoxDecoration(
-          gradient: MyDimens.bodyGradient,
-          boxShadow: MyDimens().bodyShadow,
-          borderRadius: BorderRadius.circular(12),
+          color: isSelected ? MyColor.accentColor : Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
           border: Border.all(
-            color: _selectedPlan == index ? MyColor.accentColor : Colors.white,
+            color:
+                isSelected ? MyColor.accentColor : Colors.grey.withOpacity(0.2),
             width: 2,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: isSelected
+                  ? MyColor.accentColor.withOpacity(0.4)
+                  : Colors.grey.withOpacity(0.05),
+              blurRadius: isSelected ? 12 : 5,
+              offset: const Offset(0, 5),
+            )
+          ],
         ),
-        padding: EdgeInsets.all(16),
         child: Row(
           children: [
-            Icon(Icons.layers, color: Colors.black),
-            SizedBox(width: 15),
+            // Icon Container
+            Container(
+              padding: EdgeInsets.all(12.w),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? Colors.white.withOpacity(0.2)
+                    : MyColor.accentColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                iconData,
+                color: isSelected ? Colors.white : MyColor.accentColor,
+                size: 24.sp,
+              ),
+            ),
+            SizedBox(width: 20.w),
+
+            // Text Content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(plan,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text(duration, style: TextStyle(fontSize: 14)),
+                  Text(
+                    plan,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.white : MyColor.textColor,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    duration,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: isSelected
+                          ? Colors.white.withOpacity(0.9)
+                          : Colors.grey[600],
+                    ),
+                  ),
                 ],
               ),
             ),
-            CircleAvatar(
-              radius: 10,
-              backgroundColor: _selectedPlan == index
-                  ? MyColor.accentColor
-                  : Colors.transparent,
-              child: _selectedPlan == index
-                  ? Icon(Icons.check, size: 12, color: Colors.white)
+
+            // Selection Indicator (Radio/Check)
+            Container(
+              height: 24.w,
+              width: 24.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isSelected ? Colors.white : Colors.transparent,
+                border: Border.all(
+                  color:
+                      isSelected ? Colors.white : Colors.grey.withOpacity(0.4),
+                  width: 2,
+                ),
+              ),
+              child: isSelected
+                  ? Icon(Icons.check, size: 16.sp, color: MyColor.accentColor)
                   : null,
             ),
           ],

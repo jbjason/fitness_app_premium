@@ -1,8 +1,8 @@
-import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -13,270 +13,212 @@ class Onboard5Height extends StatefulWidget {
 }
 
 class _Onboard5HeightState extends State<Onboard5Height> {
-  double _pointerValue = 152; // Start from 5ft
-  final double _minimumLevel = 122; // 4ft in cm
-  final double _maximumLevel = 213; // 7ft in cm
+  double _pointerValue = 165; // ~5ft 5in default start
+  final double _minimumLevel = 120; // cm
+  final double _maximumLevel = 220; // cm
 
-  // Converts cm to ft and in
-  String _cmToFeetInches(double cmValue) {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize provider with default value after frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _updateHeight(_pointerValue);
+    });
+  }
+
+  void _updateHeight(double cmValue) {
+    setState(() {
+      _pointerValue = cmValue;
+    });
+
+    // Logic: Store height as feet.inches (e.g., 5.06 for 5'6")
     double inches = cmValue / 2.54;
     int feet = inches ~/ 12;
     int remainingInches = (inches % 12).round();
-    // setting ft & inches as  feet.inches
-    final data = Provider.of<OnboardProvider>(context, listen: false);
-    data.setHeight(feet + (12 * remainingInches / 100));
-    return "${feet}ft ${remainingInches}inch";
+
+    if (context.mounted) {
+      final data = Provider.of<OnboardProvider>(context, listen: false);
+      data.setHeight(feet + (remainingInches / 100.0));
+    }
   }
 
-  // Generates labels in feet and inches
+  String _getFormattedHeight(double cmValue) {
+    double inches = cmValue / 2.54;
+    int feet = inches ~/ 12;
+    int remainingInches = (inches % 12).round();
+    return "$feet' $remainingInches\"";
+  }
+
   List<LinearAxisLabel> _generateLabels() {
     return [
-      LinearAxisLabel(text: '4ft 0in', value: 122),
-      LinearAxisLabel(text: '5ft 0in', value: 152),
-      LinearAxisLabel(text: '6ft 0in', value: 183),
-      LinearAxisLabel(text: '7ft 0in', value: 213),
+      const LinearAxisLabel(text: '4ft', value: 121.92),
+      const LinearAxisLabel(text: '5ft', value: 152.4),
+      const LinearAxisLabel(text: '6ft', value: 182.88),
+      const LinearAxisLabel(text: '7ft', value: 213.36),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: _buildHeightCalculator(context),
-    );
-  }
-
-  Widget _buildHeightCalculator(BuildContext context) {
-    final data = Provider.of<OnboardProvider>(context,listen: false);
-    return SfLinearGauge(
-      orientation: LinearGaugeOrientation.vertical,
-      minimum: _minimumLevel,
-      maximum: _maximumLevel,
-      tickPosition: LinearElementPosition.outside,
-      labelPosition: LinearLabelPosition.outside,
-      minorTicksPerInterval: 5,
-      interval: 10,
-      onGenerateLabels: _generateLabels,
-      axisTrackStyle: const LinearAxisTrackStyle(color: Color(0xffBC5A94)),
-      markerPointers: <LinearMarkerPointer>[
-        LinearShapePointer(
-          value: _pointerValue,
-          enableAnimation: false,
-          onChanged: (dynamic value) {
-            setState(() => _pointerValue = value as double);
-          },
-          shapeType: LinearShapePointerType.rectangle,
-          color: MyColor.accentColor,
-          height: 2,
-          width: context.screenWidth * .8 - 100,
+    return Column(
+      children: [
+        // Title
+        Text(
+          "What's Your Height?",
+          style: TextStyle(
+            fontSize: 26.sp,
+            fontWeight: FontWeight.bold,
+            color: MyColor.textColor,
+            letterSpacing: 0.5,
+          ),
+          textAlign: TextAlign.center,
         ),
-        _buildLinearWidgetPointer(
-          value: _pointerValue,
-          offset: 0,
-          child: SizedBox(
-            width: 24,
-            height: 16,
-            child: Image.asset(MyImage.rectanglePointertImg),
+        SizedBox(height: 10.h),
+
+        // Subtitle
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Text(
+            "This helps us calculate your BMI and\npersonalize your plan.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.grey[600],
+              height: 1.5,
+            ),
           ),
         ),
-        _buildLinearWidgetPointer(
-          value: _pointerValue,
-          offset: context.screenWidth * .75 - 100,
-          position: LinearElementPosition.outside,
-          child: Container(
-            width: 100,
-            height: 30,
-            decoration: BoxDecoration(
-              color: const Color(0xffFFFFFF),
-              boxShadow: const <BoxShadow>[
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0),
-                  blurRadius: 6.0,
+        SizedBox(height: 20.h),
+
+        // Gauge Area
+        Expanded(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              // Silhouette / Image Layer
+              Positioned(
+                left: -80.w,
+                right: 80.w,
+                top: 0.h,
+                bottom: 0,
+                child: Opacity(
+                  opacity: 0.8,
+                  child: Image.asset(
+                    MyImage.femaleModelImg,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ],
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Center(
-              child: Text(
-                _cmToFeetInches(_pointerValue),
-                style: const TextStyle(fontSize: 12),
               ),
-            ),
-          ),
-        ),
-      ],
-      ranges: <LinearGaugeRange>[
-        LinearGaugeRange(
-          endValue: _pointerValue,
-          startWidth: context.screenWidth * .8 - 50,
-          midWidth: context.screenWidth * .8 - 50,
-          endWidth: context.screenWidth * .8,
-          color: Colors.transparent,
-          child: Image.asset(
-            width: 30,
-            height: 60,
-           data.selectedGender == 0 ? MyImage.maleModelImg : MyImage.femaleModelImg,
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-      ],
-    );
-  }
 
-  LinearWidgetPointer _buildLinearWidgetPointer({
-    required double value,
-    required Widget child,
-    LinearElementPosition position = LinearElementPosition.cross,
-    double offset = 0,
-  }) {
-    return LinearWidgetPointer(
-      value: value,
-      enableAnimation: false,
-      onChanged: (dynamic value) {
-        setState(() => _pointerValue = value as double);
-      },
-      offset: offset,
-      position: position,
-      child: child,
-    );
-  }
-}
+              // Interactive Gauge Layer
+              // We position the container to the right, but make it wide enough (280.w)
+              // to contain the horizontal pointer line without overflowing.
+              // Shifting right by -130.w essentially aligns the gauge axis near the right screen edge.
+              Positioned(
+                top: 20.h,
+                bottom: 20.h,
+                right: -130.w,
+                width: 280.w,
+                child: SfLinearGauge(
+                  orientation: LinearGaugeOrientation.vertical,
+                  minimum: _minimumLevel,
+                  maximum: _maximumLevel,
+                  interval: 30.48,
+                  minorTicksPerInterval: 5,
+                  tickPosition: LinearElementPosition.inside,
+                  labelPosition: LinearLabelPosition.inside,
+                  onGenerateLabels: _generateLabels,
+                  axisTrackStyle: LinearAxisTrackStyle(
+                    thickness: 4.w,
+                    color: Colors.grey[200],
+                    edgeStyle: LinearEdgeStyle.bothCurve,
+                  ),
+                  majorTickStyle: LinearTickStyle(
+                    length: 15.w,
+                    thickness: 2,
+                    color: Colors.grey[400],
+                  ),
+                  minorTickStyle: LinearTickStyle(
+                    length: 8.w,
+                    thickness: 1,
+                    color: Colors.grey[300],
+                  ),
+                  axisLabelStyle: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w600,
+                  ),
+                  markerPointers: [
+                    // The draggable line that goes across the image (Left of axis)
+                    LinearShapePointer(
+                      value: _pointerValue,
+                      onChanged: (dynamic value) =>
+                          _updateHeight(value as double),
+                      shapeType: LinearShapePointerType.rectangle,
+                      color: MyColor.accentColor,
+                      height: 2.h,
+                      width: 220.w,
+                      position: LinearElementPosition.inside,
+                      offset: 0,
+                    ),
 
-/// cm code
-/* import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/core/util/my_image.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
+                    // The knob on the axis
+                    LinearShapePointer(
+                      value: _pointerValue,
+                      enableAnimation: false,
+                      onChanged: (dynamic value) =>
+                          _updateHeight(value as double),
+                      shapeType: LinearShapePointerType.circle,
+                      color: MyColor.accentColor,
+                      height: 16.w,
+                      width: 16.w,
+                      position: LinearElementPosition.cross,
+                    ),
 
-class Onboard5Height extends StatefulWidget {
-  const Onboard5Height({super.key});
-  @override
-  State<Onboard5Height> createState() => _Onboard5HeightState();
-}
-
-class _Onboard5HeightState extends State<Onboard5Height> {
-  double _pointerValue = 130;
-  final double _maximumLevel = 200;
-
-  List<LinearAxisLabel> _generateLabels() {
-    return [
-      const LinearAxisLabel(text: '0 cm', value: 0),
-      const LinearAxisLabel(text: '25 cm', value: 25),
-      const LinearAxisLabel(text: '50 cm', value: 50),
-      const LinearAxisLabel(text: '75 cm', value: 75),
-      const LinearAxisLabel(text: '100 cm', value: 100),
-      const LinearAxisLabel(text: '125 cm', value: 125),
-      const LinearAxisLabel(text: '150 cm', value: 150),
-      const LinearAxisLabel(text: '175 cm', value: 175),
-      const LinearAxisLabel(text: '200 cm', value: 200),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: _buildHeightCalculator(context),
-    );
-  }
-
-  Widget _buildHeightCalculator(BuildContext context) {
-    return SfLinearGauge(
-      orientation: LinearGaugeOrientation.vertical,
-      maximum: _maximumLevel,
-      tickPosition: LinearElementPosition.outside,
-      labelPosition: LinearLabelPosition.outside,
-      minorTicksPerInterval: 5,
-      interval: 25,
-      onGenerateLabels: _generateLabels,
-      axisTrackStyle: const LinearAxisTrackStyle(color: Color(0xffBC5A94)),
-      markerPointers: <LinearMarkerPointer>[
-        LinearShapePointer(
-          value: _pointerValue,
-          enableAnimation: false,
-          onChanged: (dynamic value) {
-            setState(() {
-              _pointerValue = value as double;
-            });
-          },
-          shapeType: LinearShapePointerType.rectangle,
-          color: MyColor.accentColor,
-          height: 2,
-          width: context.screenWidth * .8 - 100,
-        ),
-        _buildLinearWidgetPointer(
-          value: _pointerValue,
-          offset: 0,
-          child: SizedBox(
-            width: 24,
-            height: 16,
-            child: Image.asset(MyImage.rectanglePointertImg),
-          ),
-        ),
-        _buildLinearWidgetPointer(
-          value: _pointerValue,
-          offset: context.screenWidth * .8 - 100,
-          position: LinearElementPosition.outside,
-          child: Container(
-            width: 60,
-            height: 25,
-            decoration: BoxDecoration(
-              color: const Color(0xffFFFFFF),
-              boxShadow: const <BoxShadow>[
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0),
-                  blurRadius: 6.0,
+                    // The Text Bubble (Floating near the line)
+                    LinearWidgetPointer(
+                      value: _pointerValue,
+                      enableAnimation: false,
+                      onChanged: (dynamic value) =>
+                          _updateHeight(value as double),
+                      position: LinearElementPosition.inside,
+                      offset: 40.w,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: MyColor.accentColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12.r),
+                            topRight: Radius.circular(12.r),
+                            bottomRight: Radius.circular(12.r),
+                            bottomLeft: Radius.circular(0),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColor.accentColor.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            )
+                          ],
+                        ),
+                        child: Text(
+                          _getFormattedHeight(_pointerValue),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Center(
-              child: Text(
-                '${_pointerValue.toStringAsFixed(0)}cm',
               ),
-            ),
+            ],
           ),
         ),
       ],
-      ranges: <LinearGaugeRange>[
-        LinearGaugeRange(
-          endValue: _pointerValue,
-          startWidth: context.screenWidth * .8 - 50,
-          midWidth: context.screenWidth * .8 - 50,
-          endWidth: context.screenWidth * .8,
-          color: Colors.transparent,
-          child: Image.asset(
-            width: 30,
-            height: 60,
-            MyImage.femaleModelImg,
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-      ],
-    );
-  }
-
-  LinearWidgetPointer _buildLinearWidgetPointer({
-    required double value,
-    required Widget child,
-    LinearElementPosition position = LinearElementPosition.cross,
-    double offset = 0,
-  }) {
-    return LinearWidgetPointer(
-      value: value,
-      enableAnimation: false,
-      onChanged: (dynamic value) {
-        setState(() {
-          _pointerValue = value as double;
-        });
-      },
-      offset: offset,
-      position: position,
-      child: child,
     );
   }
 }
-*/

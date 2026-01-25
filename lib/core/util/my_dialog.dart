@@ -98,8 +98,6 @@ class MyDialog {
     ).show(context);
   }
 
-
-
   Future<bool> showExitPopup(BuildContext context) async {
     return showAlertDialog(
       context: context,
@@ -144,7 +142,7 @@ class MyDialog {
             fontFamily: "poppins_regular", fontWeight: FontWeight.bold),
       );
   Widget get _getExitSubContent => const Text(
-        'Do you want to exit SoowGood?',
+        'Do you want to exit Fitness App?',
         style: TextStyle(
             fontFamily: "poppins_regular",
             fontSize: 14,
@@ -173,7 +171,7 @@ class MyDialog {
             ),
             child: const Text(
               'Yes',
-              style: TextStyle(color: MyColor.ashhLight),
+              style: TextStyle(color: MyColor.skySecondary),
             ),
           ),
         ),
