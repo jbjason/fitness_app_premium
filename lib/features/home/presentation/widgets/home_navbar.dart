@@ -2,7 +2,7 @@ import 'package:fitness_app_premium/config/extension/media_query_extension.dart'
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:svg_flutter/svg.dart';
 
 class HomeNavbar extends StatelessWidget {
   const HomeNavbar(
