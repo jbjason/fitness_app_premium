@@ -1,3 +1,4 @@
+import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
 class OnboardProvider with ChangeNotifier {
@@ -21,4 +22,69 @@ class OnboardProvider with ChangeNotifier {
   void setHeight(double i) => _selectedHeight = i;
   void setWeight(double i) => _selectedWeight = i;
   void setTargetWeight(double i) => _selectedTargetWeight = i;
+
+  List<Map<String, String>> get getGoals {
+    ///   Male = 0 Female = 1
+    return selectedGender == 1
+        ? [
+            {
+              'title': 'Lose Weight & Keep Fit',
+              'subtitle': "💪 Slim & fit ahead!",
+              'description':
+                  'Get ready to see a healthier, lighter you. Follow our tailored plan to conquer your fitness goal!',
+              'image': MyImage.loseWeightImg
+            },
+            {
+              'title': 'Butt Lift & Tone',
+              'subtitle': "🥰 Bubble butt awaits!",
+              'description':
+                  'Your journey to lifted butt starts now!\nLet\'s shape your glutes into perfect ones!',
+              'image': MyImage.buttLiftImg
+            },
+            {
+              'title': 'Lose Belly Fat',
+              'subtitle': "👋 Say bye to belly fat!",
+              'description':
+                  'Shed your stubborn belly fat and get a slimmer waistline, and we\'re here to support you!',
+              'image': MyImage.bellyFatImg
+            },
+            {
+              'title': 'Build Muscles & Strength',
+              'subtitle': "💪 Muscle up, confidence up!",
+              'description':
+                  'Let\'s craft your ideal physique with our superb plan, one muscle at a time.',
+              'image': MyImage.buildMuscleImg
+            },
+          ]
+        : [
+            {
+              'title': 'Lose Weight & Get Lean',
+              'subtitle': '🔥 Burn fat, stay sharp!',
+              'description':
+                  'Drop excess fat, boost your energy, and feel lighter every day with a plan built for men.',
+              'image': MyImage.loseWeightMaleImg,
+            },
+            {
+              'title': 'Build Muscle & Strength',
+              'subtitle': '💪 Stronger every rep!',
+              'description':
+                  'Gain solid muscle and real strength with structured workouts designed for maximum results.',
+              'image': MyImage.buildMuscleMaleImg,
+            },
+            {
+              'title': 'Lose Belly Fat',
+              'subtitle': '🚫 Crush the dad belly!',
+              'description':
+                  'Target stubborn belly fat and reveal a stronger, tighter core with focused routines.',
+              'image': MyImage.loseBellyFatMaleImg,
+            },
+            {
+              'title': 'Get Athletic & Fit',
+              'subtitle': '⚡ Move better, feel faster!',
+              'description':
+                  'Improve endurance, agility, and overall fitness to perform better in daily life and sports.',
+              'image': MyImage.athleticMaleImg,
+            },
+          ];
+  }
 }

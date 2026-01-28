@@ -104,7 +104,9 @@ class _Onboard5HeightState extends State<Onboard5Height> {
                 child: Opacity(
                   opacity: 0.8,
                   child: Image.asset(
-                    MyImage.femaleModelImg,
+                    context.read<OnboardProvider>().selectedGender == 0
+                        ? MyImage.maleModelImg
+                        : MyImage.femaleModelImg,
                     fit: BoxFit.cover,
                   ),
                 ),

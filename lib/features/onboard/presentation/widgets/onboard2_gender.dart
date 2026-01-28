@@ -66,7 +66,7 @@ class _Onboard2GenderState extends State<Onboard2Gender> {
         onTap: () {
           if (_selectedGender != genderIndex) {
             setState(() => _selectedGender = genderIndex);
-            final data = Provider.of<OnboardProvider>(context, listen: false);
+            final data = context.read<OnboardProvider>();
             data.setGender(genderIndex);
           }
         },

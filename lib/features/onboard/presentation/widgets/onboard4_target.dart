@@ -1,5 +1,4 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,68 +12,14 @@ class Onboard4Target extends StatefulWidget {
 
 class _Onboard4TargetState extends State<Onboard4Target> {
   int selectedIndex = 0;
+  late final List<Map<String, String>> _goals;
 
-  final List<Map<String, String>> _goals = [
-    {
-      'title': 'Lose Weight & Keep Fit',
-      'subtitle': "💪 Slim & fit ahead!",
-      'description':
-          'Get ready to see a healthier, lighter you. Follow our tailored plan to conquer your fitness goal!',
-      'image': MyImage.loseWeightImg
-    },
-    {
-      'title': 'Butt Lift & Tone',
-      'subtitle': "🥰 Bubble butt awaits!",
-      'description':
-          'Your journey to lifted butt starts now!\nLet\'s shape your glutes into perfect ones!',
-      'image': MyImage.buttLiftImg
-    },
-    {
-      'title': 'Lose Belly Fat',
-      'subtitle': "👋 Say bye to belly fat!",
-      'description':
-          'Shed your stubborn belly fat and get a slimmer waistline, and we\'re here to support you!',
-      'image': MyImage.bellyFatImg
-    },
-    {
-      'title': 'Build Muscles & Strength',
-      'subtitle': "💪 Muscle up, confidence up!",
-      'description':
-          'Let\'s craft your ideal physique with our superb plan, one muscle at a time.',
-      'image': MyImage.buildMuscleImg
-    },
-  ];
-
-  final List<Map<String, String>> _menGoals = [
-  {
-    'title': 'Lose Weight & Get Lean',
-    'subtitle': '🔥 Burn fat, stay sharp!',
-    'description':
-        'Drop excess fat, boost your energy, and feel lighter every day with a plan built for men.',
-    'image': MyImage.loseWeightImg,
-  },
-  {
-    'title': 'Build Muscle & Strength',
-    'subtitle': '💪 Stronger every rep!',
-    'description':
-        'Gain solid muscle and real strength with structured workouts designed for maximum results.',
-    'image': MyImage.buildMuscleImg,
-  },
-  {
-    'title': 'Lose Belly Fat',
-    'subtitle': '🚫 Crush the dad belly!',
-    'description':
-        'Target stubborn belly fat and reveal a stronger, tighter core with focused routines.',
-    'image': MyImage.bellyFatImg,
-  },
-  {
-    'title': 'Get Athletic & Fit',
-    'subtitle': '⚡ Move better, feel faster!',
-    'description':
-        'Improve endurance, agility, and overall fitness to perform better in daily life and sports.',
-    'image': MyImage.athleticImg,
-  },
-];
+  @override
+  void initState() {
+    super.initState();
+    final data = Provider.of<OnboardProvider>(context, listen: false);
+    _goals = data.getGoals;
+  }
 
   @override
   Widget build(BuildContext context) {
