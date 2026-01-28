@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: IndexedStack(index: _currentPage, children: _pages),
       bottomNavigationBar: HomeNavbar(
         onPageChange: _onPageChange,

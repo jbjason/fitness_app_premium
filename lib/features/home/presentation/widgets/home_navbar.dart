@@ -1,113 +1,92 @@
-import 'package:fitness_app_premium/config/extension/media_query_extension.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
-import 'package:svg_flutter/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeNavbar extends StatelessWidget {
-  const HomeNavbar(
-      {super.key, required this.currentPage, required this.onPageChange});
   final int currentPage;
-  final Function onPageChange;
+  final Function(int) onPageChange;
+
+  const HomeNavbar({
+    super.key,
+    required this.currentPage,
+    required this.onPageChange,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final navItemTitles = ['Home', 'Report', "", 'Schedule', 'Profile'];
-    final navItemImages = [
-      MyImage.homeIconImg,
-      MyImage.appointmentIconImg,
-      "",
-      MyImage.patientIconImg,
-      MyImage.profileIconImg
-    ];
-    final navItemSelectedImages = [
-      MyImage.homeIconFillImg,
-      MyImage.appointmentIconFillImg,
-      "",
-      MyImage.patientIconFillImg,
-      MyImage.profileIconFillImg
-    ];
+    final activeGradient = MyColor.fitnessGradient;
+
     return SizedBox(
-      height: kBottomNavigationBarHeight * 1.5,
+      height: 110.h,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: [
-          // orange border
-          Positioned(
-            bottom: 0,
-            top: -5,
-            left: 2,
-            right: 2,
-            child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width,
-                  kBottomNavigationBarHeight * 1.5),
-              painter: BottomNavPainter(
-                  color: MyColor.accentColor, style: PaintingStyle.stroke),
-            ),
-          ),
-          // black border
-          Positioned(
-            top: 0,
-            bottom: 5,
-            left: 5,
-            right: 5,
-            child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width,
-                  kBottomNavigationBarHeight * 1.3),
-              painter: BottomNavPainter(
-                  color: Colors.grey[850]!, style: PaintingStyle.fill),
-            ),
-          ),
-          // nav-Icons
-          Positioned(
-            bottom: 22,
-            left: 10,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                navItemTitles.length,
-                (i) => i == 2
-                    ? SizedBox(width: 20)
-                    : _getNavBarItem(
-                        index: i,
-                        color: currentPage == i ? Colors.white : Colors.grey,
-                        img: currentPage == i
-                            ? navItemSelectedImages[i]
-                            : navItemImages[i],
-                        imgWidth: 21,
-                        title: navItemTitles[i],
-                        width: context.screenWidth - 30 / navItemTitles.length,
-                      ),
-              ),
-            ),
-          ),
-          // Center Circular Button
-          Positioned(
-            bottom: 25,
+          Align(
+            alignment: Alignment.bottomCenter,
             child: Container(
-              height: 75,
-              width: 75,
-              padding: EdgeInsets.all(2.5),
+              height: 70.h,
+              margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
+                color: MyColor.cardBackgroundColor,
+                borderRadius: BorderRadius.circular(25.r),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 5,
-                    offset: Offset(0, 5),
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              child: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
-                  color: MyColor.accentColor,
-                  shape: BoxShape.circle,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildNavItem(0, Icons.home_rounded, "Home"),
+                  _buildNavItem(1, Icons.bar_chart_rounded, "Report"),
+                  SizedBox(width: 60.w),
+                  _buildNavItem(3, Icons.calendar_month_rounded, "Schedule"),
+                  _buildNavItem(4, Icons.person_rounded, "Profile"),
+                ],
+              ),
+            ),
+          ),
+
+          // 2. The Exotic Center FAB
+          Positioned(
+            bottom: 50.h,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: GestureDetector(
+                onTap: () => onPageChange(2),
+                child: Container(
+                  height: 65.w,
+                  width: 65.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: activeGradient,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    border: Border.all(color: Colors.white, width: 4.w),
+                    boxShadow: [
+                      BoxShadow(
+                        color: activeGradient.last.withOpacity(0.4),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.fitness_center_rounded,
+                      color: Colors.white,
+                      size: 28.w,
+                    ),
+                  ),
                 ),
-                child: Icon(Icons.pets, color: Colors.white, size: 30),
               ),
             ),
           ),
@@ -116,34 +95,35 @@ class HomeNavbar extends StatelessWidget {
     );
   }
 
-  Widget _getNavBarItem(
-          {required int index,
-          required Color color,
-          required String img,
-          required double imgWidth,
-          required String title,
-          required double width}) =>
-      GestureDetector(
-        onTap: () => onPageChange(index),
-        child: Container(
-          // width: width,
-          color: Colors.transparent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(img, width: imgWidth, color: color),
-              const SizedBox(height: 3),
-              FittedBox(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                      color: color, fontSize: 10, fontWeight: FontWeight.bold),
-                ),
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final bool isSelected = currentPage == index;
+    final Color color = isSelected ? MyColor.vibrantPurple : MyColor.textThird;
+
+    return GestureDetector(
+      onTap: () => onPageChange(index),
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 26.w),
+            SizedBox(height: 4.h),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutBack,
+              height: 5.w,
+              width: 5.w,
+              decoration: BoxDecoration(
+                color: isSelected ? MyColor.vibrantPurple : Colors.transparent,
+                shape: BoxShape.circle,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 }
 
 class BottomNavPainter extends CustomPainter {
