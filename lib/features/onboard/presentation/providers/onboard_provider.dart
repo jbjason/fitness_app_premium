@@ -1,3 +1,4 @@
+import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/core/util/my_image.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,27 @@ class OnboardProvider with ChangeNotifier {
   void setHeight(double i) => _selectedHeight = i;
   void setWeight(double i) => _selectedWeight = i;
   void setTargetWeight(double i) => _selectedTargetWeight = i;
+
+  List<Color> get activeGradient {
+    return selectedGender == 1 ? MyColor.fitnessGradient : MyColor.coolGradient;
+  }
+
+  ///
+  ///
+  final String mainGoal = 'Butt Lift & Tone';
+  final String planLevel = 'Intermediate';
+  final double currentWeight = 70.5;
+  final double targetWeight = 58.0;
+  final double height = 165.0; // cm
+
+  double get bmi => currentWeight / ((height / 100) * (height / 100));
+
+  // Progress logic (0.0 to 1.0)
+  double get progressPercentage {
+    double totalLossNeeded = currentWeight - targetWeight;
+    double totalJourney = totalLossNeeded + 5; // Mock starting point
+    return (5 / totalJourney).clamp(0.0, 1.0);
+  }
 
   List<Map<String, String>> get getGoals {
     ///   Male = 0 Female = 1

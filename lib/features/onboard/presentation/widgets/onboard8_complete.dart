@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/features/home/presentation/screens/home_screen.dart';
+import 'package:fitness_app_premium/features/home/presentation/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -37,7 +37,7 @@ class _Onboard8CompleteState extends State<Onboard8Complete>
           if (mounted) {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const HomeScreen()),
+                MaterialPageRoute(builder: (_) => const Home()),
                 (route) => false);
           }
         });
