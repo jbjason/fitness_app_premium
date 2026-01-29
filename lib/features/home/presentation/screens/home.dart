@@ -13,6 +13,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentPage = 0;
+  bool _isNavBarVisible = true;
+  double _lastScrollOffset = 0;
+  
   final _pages = [
     HomeScreen(),
     ReportScreen(),
@@ -25,12 +28,41 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: IndexedStack(index: _currentPage, children: _pages),
-      bottomNavigationBar: HomeNavbar(
-        onPageChange: _onPageChange,
-        currentPage: _currentPage,
+      body: NotificationListener<ScrollNotification>(
+        onNotification: _handleScrollNotification,
+        child: IndexedStack(index: _currentPage, children: _pages),
+      ),
+      bottomNavigationBar: AnimatedSlide(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        offset: _isNavBarVisible ? Offset.zero : const Offset(0, 1),
+        child: HomeNavbar(
+          onPageChange: _onPageChange,
+          currentPage: _currentPage,
+        ),
       ),
     );
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollUpdateNotification) {
+      final currentScrollOffset = notification.metrics.pixels;
+      final scrollDelta = currentScrollOffset - _lastScrollOffset;
+
+      // Only trigger if scrolled more than 5 pixels to avoid jitter
+      if (scrollDelta.abs() > 5) {
+        if (scrollDelta > 0 && _isNavBarVisible) {
+          // Scrolling down - hide navbar
+          setState(() => _isNavBarVisible = false);
+        } else if (scrollDelta < 0 && !_isNavBarVisible) {
+          // Scrolling up - show navbar
+          setState(() => _isNavBarVisible = true);
+        }
+      }
+
+      _lastScrollOffset = currentScrollOffset;
+    }
+    return false;
   }
 
   void _onPageChange(int i) => setState(() => _currentPage = i);
