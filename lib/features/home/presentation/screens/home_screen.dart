@@ -12,30 +12,28 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: MyColor.homeBodyColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20.h),
-              _buildHeader(theme, context),
-              SizedBox(height: 25.h),
-              _buildMainGoalCard(theme, context),
-              SizedBox(height: 25.h),
-              _buildStatsRow(theme),
-              SizedBox(height: 25.h),
-              _buildSectionTitle(theme, "Today's Plan"),
-              SizedBox(height: 15.h),
-              _buildWorkoutCard(theme, context),
-              SizedBox(height: 25.h),
-              _buildSectionTitle(theme, "Meals & Water"),
-              SizedBox(height: 15.h),
-              _buildMealAndWaterRow(theme),
-              SizedBox(height: 40.h),
-            ],
-          ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20.h),
+            _buildHeader(theme, context),
+            SizedBox(height: 25.h),
+            _buildMainGoalCard(theme, context),
+            SizedBox(height: 25.h),
+            _buildStatsRow(theme),
+            SizedBox(height: 25.h),
+            _buildSectionTitle(theme, "Today's Plan"),
+            SizedBox(height: 15.h),
+            _buildWorkoutCard(theme, context),
+            SizedBox(height: 25.h),
+            _buildSectionTitle(theme, "Meals & Water"),
+            SizedBox(height: 15.h),
+            _buildMealAndWaterRow(theme),
+            SizedBox(height: 40.h),
+          ],
         ),
       ),
     );
