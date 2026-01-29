@@ -3,6 +3,7 @@ import 'package:fitness_app_premium/features/home/presentation/widgets/home_navb
 import 'package:fitness_app_premium/features/profile/presentation/screens/profile_screen.dart';
 import 'package:fitness_app_premium/features/report/presentation/screen/report_screen.dart';
 import 'package:fitness_app_premium/features/schedule/presentation/screen/schedule_screen.dart';
+import 'package:fitness_app_premium/features/workout/presentation/screen/workout_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -15,11 +16,11 @@ class _HomeState extends State<Home> {
   int _currentPage = 0;
   bool _isNavBarVisible = true;
   double _lastScrollOffset = 0;
-  
+
   final _pages = [
     HomeScreen(),
     ReportScreen(),
-    SizedBox(),
+    WorkoutScreen(),
     ScheduleScreen(),
     ProfileScreen(),
   ];

@@ -1,7 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fitness_app_premium/features/auth/presentation/screens/auth_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_edit_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_language_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_privacy_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_settings_screen.dart';
 import 'package:fitness_app_premium/features/profile/presentation/widgets/profile_header.dart';
 import 'package:fitness_app_premium/features/profile/presentation/widgets/profile_listitem.dart';
+import 'package:fitness_app_premium/features/reminder/presentation/screen/reminder_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
@@ -28,13 +33,23 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.person_outline_rounded,
                     title: 'Edit Profile',
                     iconColor: MyColor.vibrantPurple,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => ProfileEditScreen()),
+                      );
+                    },
                   ),
                   ProfileListItem(
                     icon: Icons.notifications_none_rounded,
                     title: 'Daily Reminder',
                     iconColor: MyColor.energyOrange,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => ReminderScreen()),
+                      );
+                    },
                   ),
                   ProfileListItem(
                     icon: Icons.language_rounded,
@@ -43,7 +58,13 @@ class ProfileScreen extends StatelessWidget {
                         style: TextStyle(
                             color: MyColor.textThird, fontSize: 12.sp)),
                     iconColor: MyColor.skyPrimary,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProfileLanguageScreen()),
+                      );
+                    },
                   ),
                   SizedBox(height: 25.h),
                   _buildSectionTitle("Preferences"),
@@ -52,13 +73,25 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.settings_outlined,
                     title: 'Settings',
                     iconColor: MyColor.textThird,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProfileSettingsScreen()),
+                      );
+                    },
                   ),
                   ProfileListItem(
                     icon: Icons.privacy_tip_outlined,
                     title: "Privacy Policy",
                     iconColor: MyColor.textThird,
-                    onTap: () {},
+                    onTap: () {
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProfilePrivacyScreen()),
+                      );
+                    },
                   ),
                   SizedBox(height: 25.h),
                   ProfileListItem(
