@@ -1,7 +1,8 @@
-import 'package:fitness_app_premium/features/auth/presentation/screens/auth_screen.dart';
 import 'package:fitness_app_premium/features/home/presentation/screens/home_screen.dart';
 import 'package:fitness_app_premium/features/home/presentation/widgets/home_navbar.dart';
 import 'package:fitness_app_premium/features/profile/presentation/screens/profile_screen.dart';
+import 'package:fitness_app_premium/features/report/presentation/screen/report_screen.dart';
+import 'package:fitness_app_premium/features/schedule/presentation/screen/schedule_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,9 +15,9 @@ class _HomeState extends State<Home> {
   int _currentPage = 0;
   final _pages = [
     HomeScreen(),
-    TestScreen(title: "Report Screen"),
+    ReportScreen(),
     SizedBox(),
-    TestScreen(title: "Schedule Screen"),
+    ScheduleScreen(),
     ProfileScreen(),
   ];
 
@@ -32,15 +33,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _onPageChange(int i) {
-    if (i == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => AuthScreen()),
-      );
-    }
-    setState(() => _currentPage = i);
-  }
+  void _onPageChange(int i) => setState(() => _currentPage = i);
 }
 
 class TestScreen extends StatelessWidget {

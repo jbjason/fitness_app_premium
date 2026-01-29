@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fitness_app_premium/features/auth/presentation/screens/auth_screen.dart';
 import 'package:fitness_app_premium/features/profile/presentation/widgets/profile_header.dart';
 import 'package:fitness_app_premium/features/profile/presentation/widgets/profile_listitem.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             const ProfileHeader(),
-            SizedBox(height: 20.h),
+            SizedBox(height: 60.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
@@ -65,7 +66,12 @@ class ProfileScreen extends StatelessWidget {
                     title: 'Logout',
                     iconColor: MyColor.calorieRed,
                     isDestructive: true,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => AuthScreen()),
+                      );
+                    },
                   ),
                 ],
               ),
