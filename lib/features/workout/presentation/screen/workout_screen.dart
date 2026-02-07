@@ -33,8 +33,8 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         ),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 20.w),
-            padding: EdgeInsets.all(8.w),
+            margin: EdgeInsets.only(right: 20.h),
+            padding: EdgeInsets.all(8.h),
             decoration: BoxDecoration(
               color: theme.cardColor,
               shape: BoxShape.circle,
@@ -52,7 +52,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,14 +87,14 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: _categories.length,
-        separatorBuilder: (c, i) => SizedBox(width: 10.w),
+        separatorBuilder: (c, i) => SizedBox(width: 10.h),
         itemBuilder: (context, index) {
           final isSelected = _selectedCategory == index;
           return GestureDetector(
             onTap: () => setState(() => _selectedCategory = index),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              padding: EdgeInsets.symmetric(horizontal: 24.h),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: isSelected ? null : theme.cardColor,
@@ -164,14 +164,14 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             ),
           ),
           Positioned(
-            left: 20.w,
+            left: 20.h,
             bottom: 20.h,
-            right: 20.w,
+            right: 20.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 5.h),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8.r),
@@ -210,11 +210,11 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 14.sp),
+                              fontSize: 14.h),
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.w),
+                    SizedBox(width: 15.h),
                     Container(
                       height: 45.h,
                       width: 45.h,
@@ -223,7 +223,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(Icons.bookmark_outline_rounded,
-                          color: Colors.white, size: 22.w),
+                          color: Colors.white, size: 22.h),
                     )
                   ],
                 )
@@ -244,7 +244,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             style: TextStyle(
                 color: MyColor.vibrantPurple,
                 fontWeight: FontWeight.w600,
-                fontSize: 12.sp)),
+                fontSize: 12.h)),
       ],
     );
   }
@@ -257,7 +257,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       separatorBuilder: (c, i) => SizedBox(height: 15.h),
       itemBuilder: (context, index) {
         return Container(
-          padding: EdgeInsets.all(12.w),
+          padding: EdgeInsets.all(12.h),
           decoration: BoxDecoration(
             color: theme.cardColor,
             borderRadius: BorderRadius.circular(20.r),
@@ -279,12 +279,12 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                       : index == 1
                           ? "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=200"
                           : "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?q=80&w=200",
-                  width: 80.w,
-                  height: 80.w,
+                  width: 80.h,
+                  height: 80.h,
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 15.w),
+              SizedBox(width: 15.h),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,13 +303,13 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                     Row(
                       children: [
                         Icon(Icons.access_time_rounded,
-                            size: 14.w, color: MyColor.textThird),
-                        SizedBox(width: 4.w),
+                            size: 14.h, color: MyColor.textThird),
+                        SizedBox(width: 4.h),
                         Text("30 min", style: theme.textTheme.bodySmall),
-                        SizedBox(width: 12.w),
+                        SizedBox(width: 12.h),
                         Icon(Icons.local_fire_department_rounded,
-                            size: 14.w, color: MyColor.calorieRed),
-                        SizedBox(width: 4.w),
+                            size: 14.h, color: MyColor.calorieRed),
+                        SizedBox(width: 4.h),
                         Text("320 kcal", style: theme.textTheme.bodySmall),
                       ],
                     ),
@@ -317,13 +317,13 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(8.w),
+                padding: EdgeInsets.all(8.h),
                 decoration: BoxDecoration(
                   color: MyColor.homeBodyColor,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(Icons.play_arrow_rounded,
-                    color: MyColor.vibrantPurple, size: 24.w),
+                    color: MyColor.vibrantPurple, size: 24.h),
               )
             ],
           ),
