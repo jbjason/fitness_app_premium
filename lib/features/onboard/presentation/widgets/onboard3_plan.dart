@@ -51,13 +51,13 @@ class _Onboard3PlanState extends State<Onboard3Plan> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                _buildPlanOption(0, 'Beginner', '5-10 min a day',
+                _buildPlanOption(0, 'Beginner', '20-30 min a day',
                     Icons.accessibility_new_rounded),
                 SizedBox(height: 15.h),
-                _buildPlanOption(1, 'Intermediate', '10-20 min a day',
+                _buildPlanOption(1, 'Intermediate', '40-60 min a day',
                     Icons.fitness_center_rounded),
                 SizedBox(height: 15.h),
-                _buildPlanOption(2, 'Advanced', '15-30 min a day',
+                _buildPlanOption(2, 'Advanced', '60-90 min a day',
                     Icons.local_fire_department_rounded),
               ],
             ),

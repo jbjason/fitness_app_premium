@@ -1,3 +1,7 @@
+import 'package:fitness_app_premium/features/home/presentation/widgets/drink_chart_card.dart';
+import 'package:fitness_app_premium/features/home/presentation/widgets/exercise_plan_card.dart';
+import 'package:fitness_app_premium/features/home/presentation/widgets/lifestyle_plan_card.dart';
+import 'package:fitness_app_premium/features/home/presentation/widgets/meal_plan_card.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +28,10 @@ class HomeScreen extends StatelessWidget {
             _buildMainGoalCard(theme, context),
             SizedBox(height: 25.h),
             _buildStatsRow(theme),
+            SizedBox(height: 25.h),
+            _buildSectionTitleOnly(theme, "Your Plan"),
+            SizedBox(height: 15.h),
+            _buildPlanCards(theme, context),
             SizedBox(height: 25.h),
             _buildSectionTitle(theme, "Today's Plan"),
             SizedBox(height: 15.h),
@@ -125,13 +133,7 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
-                        provider.selectedPlan == 0
-                            ? "Lose Weight & Keep Fit"
-                            : provider.selectedPlan == 1
-                                ? "Butt Lift & Tone"
-                                : provider.selectedPlan == 2
-                                    ? "Lose Belly Fat"
-                                    : "Build Muscles & Strength",
+                        provider.currentWeightLossPlan.levelName,
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -388,7 +390,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Text(
-                    "${provider.planLevel} Plan",
+                    "${provider.currentWeightLossPlan.levelName} Plan",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 10.sp,
@@ -524,6 +526,41 @@ class HomeScreen extends StatelessWidget {
                 color: MyColor.vibrantPurple,
                 fontWeight: FontWeight.w600,
                 fontSize: 12.sp)),
+      ],
+    );
+  }
+
+  Widget _buildSectionTitleOnly(ThemeData theme, String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(title, style: theme.textTheme.titleLarge),
+    );
+  }
+
+  Widget _buildPlanCards(ThemeData theme, BuildContext context) {
+    final plan = context.read<OnboardProvider>().currentWeightLossPlan;
+
+    return Column(
+      children: [
+        DrinkChartCard(
+          drinkPlan: plan.drinkPlan,
+          planLevel: plan.level,
+        ),
+        SizedBox(height: 20.h),
+        MealPlanCard(
+          mealPlan: plan.mealPlan,
+          planLevel: plan.level,
+        ),
+        SizedBox(height: 20.h),
+        ExercisePlanCard(
+          exercisePlan: plan.exercisePlan,
+          planLevel: plan.level,
+        ),
+        SizedBox(height: 20.h),
+        LifestylePlanCard(
+          lifestylePlan: plan.lifestylePlan,
+          planLevel: plan.level,
+        ),
       ],
     );
   }

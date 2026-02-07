@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ProfileListItem extends StatelessWidget {
   final IconData icon;
   final String title;
+  final String? subtitle;
   final Widget? trailing;
   final Color iconColor;
   final VoidCallback onTap;
@@ -14,6 +15,7 @@ class ProfileListItem extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    this.subtitle,
     this.trailing,
     required this.iconColor,
     required this.onTap,
@@ -61,18 +63,34 @@ class ProfileListItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 16.w),
-                // Title
+                // Title and Subtitle
                 Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: isDestructive
-                          ? MyColor.calorieRed
-                          : MyColor.textColor,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Poppins',
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: isDestructive
+                              ? MyColor.calorieRed
+                              : MyColor.textColor,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      if (subtitle != null) ...[
+                        SizedBox(height: 2.h),
+                        Text(
+                          subtitle!,
+                          style: TextStyle(
+                            color: MyColor.textThird,
+                            fontSize: 12.sp,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
                 // Trailing

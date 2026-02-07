@@ -119,32 +119,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
 
-          // 3. Typographic Background Element
-          Positioned(
-            top: size.height * 0.12,
-            left: 0,
-            right: 0,
-            child: Opacity(
-              opacity: 0.03,
-              child: Text(
-                'FITNESS',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: size.width * 0.175,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  letterSpacing: 8,
-                ),
-              ),
-            ),
-          ),
-
-          // 4. Main Character Image
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: size.height * 0.75,
+          Positioned.fill(
             child: FadeTransition(
               opacity: _fadeAnimation,
               child: Image.asset(

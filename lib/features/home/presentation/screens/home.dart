@@ -1,7 +1,7 @@
 import 'package:fitness_app_premium/features/home/presentation/screens/home_screen.dart';
 import 'package:fitness_app_premium/features/home/presentation/widgets/home_navbar.dart';
 import 'package:fitness_app_premium/features/profile/presentation/screens/profile_screen.dart';
-import 'package:fitness_app_premium/features/report/presentation/screen/report_screen.dart';
+import 'package:fitness_app_premium/features/progress_report/presentation/screen/progress_report_screen.dart';
 import 'package:fitness_app_premium/features/schedule/presentation/screen/schedule_screen.dart';
 import 'package:fitness_app_premium/features/workout/presentation/screen/workout_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
 
   final _pages = [
     HomeScreen(),
-    ReportScreen(),
+    ProgressReportScreen(),
     WorkoutScreen(),
     ScheduleScreen(),
     ProfileScreen(),

@@ -5,8 +5,22 @@ import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
-class ReportScreen extends StatelessWidget {
-  const ReportScreen({super.key});
+class ProgressReportScreen extends StatefulWidget {
+  const ProgressReportScreen({super.key});
+
+  @override
+  State<ProgressReportScreen> createState() => _ProgressReportScreenState();
+}
+
+class _ProgressReportScreenState extends State<ProgressReportScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<OnboardProvider>().ensureTodayEntry();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,17 +90,22 @@ class ReportScreen extends StatelessWidget {
   }
 
   // --- 1. Custom Weight Chart Card ---
-  Widget _buildWeightChartCard(ThemeData theme, OnboardProvider provider) {
-    // Mock Data: Last 7 days weights
-    final List<double> weeklyWeights = [
-      provider.selectedWeight + 1.5,
-      provider.selectedWeight + 1.2,
-      provider.selectedWeight + 0.8,
-      provider.selectedWeight + 0.5,
-      provider.selectedWeight + 0.9,
-      provider.selectedWeight + 0.2,
-      provider.selectedWeight // Current
-    ];
+  Widget _buildWeightChartCard(
+    ThemeData theme,
+    OnboardProvider provider,
+  ) {
+    final now = DateTime.now();
+    final List<DateTime> weekDates =
+      List.generate(7, (i) => now.subtract(Duration(days: 6 - i)));
+    final List<double> weeklyWeights =
+      provider.getWeeklyWeights(endDate: now);
+    final double weeklyDelta = weeklyWeights.first - weeklyWeights.last;
+    final bool isLoss = weeklyDelta > 0;
+    final Color trendColor = isLoss ? MyColor.successGreen : MyColor.calorieRed;
+    final IconData trendIcon =
+        isLoss ? Icons.trending_down_rounded : Icons.trending_up_rounded;
+    final String trendText =
+        "${isLoss ? '-' : '+'}${weeklyDelta.abs().toStringAsFixed(1)} kg";
 
     // Find max for scaling the bars
     final double maxWeight = weeklyWeights.reduce(math.max);
@@ -122,17 +141,16 @@ class ReportScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: MyColor.successGreen.withOpacity(0.1),
+                  color: trendColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.trending_down_rounded,
-                        color: MyColor.successGreen, size: 16.w),
+                    Icon(trendIcon, color: trendColor, size: 16.w),
                     SizedBox(width: 4.w),
-                    Text("-1.5 kg",
+                    Text(trendText,
                         style: TextStyle(
-                            color: MyColor.successGreen,
+                            color: trendColor,
                             fontWeight: FontWeight.w700,
                             fontSize: 12.sp)),
                   ],
@@ -151,17 +169,13 @@ class ReportScreen extends StatelessWidget {
                 final weight = weeklyWeights[index];
                 final bool isToday = index == 6;
                 // Normalize height between 20% and 100% of container height based on data
-                final double range = maxWeight - minWeight + 2; // buffer
+                final double range = (maxWeight - minWeight).abs() < 0.1
+                  ? 2
+                  : (maxWeight - minWeight) + 2;
                 final double normalized = (weight - (minWeight - 1)) / range;
-                final List<String> days = [
-                  'Mon',
-                  'Tue',
-                  'Wed',
-                  'Thu',
-                  'Fri',
-                  'Sat',
-                  'Sun'
-                ];
+                final List<String> days = weekDates
+                    .map((d) => _shortWeekday(d.weekday))
+                    .toList();
 
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -225,11 +239,15 @@ class ReportScreen extends StatelessWidget {
   }
 
   // --- 2. Summary Grid ---
-  Widget _buildSummaryGrid(ThemeData theme, OnboardProvider provider) {
-    // Calculation mock logic
-    double startWeight = 74.0; // Retrieve from provider in real app
-    double lost = startWeight - provider.selectedWeight;
-    double progress = lost / (startWeight - provider.selectedTargetWeight);
+  Widget _buildSummaryGrid(
+    ThemeData theme,
+    OnboardProvider provider,
+  ) {
+    final startWeight = provider.getStartWeightForProgress();
+    final lost = startWeight - provider.selectedWeight;
+    final totalToLose = startWeight - provider.selectedTargetWeight;
+    double progress = totalToLose <= 0 ? 0 : (lost / totalToLose);
+    progress = progress.clamp(0.0, 1.0);
 
     return Row(
       children: [
@@ -577,5 +595,18 @@ class ReportScreen extends StatelessWidget {
         Icon(Icons.more_horiz_rounded, color: MyColor.textThird),
       ],
     );
+  }
+
+  String _shortWeekday(int weekday) {
+    const days = [
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun',
+    ];
+    return days[weekday - 1];
   }
 }

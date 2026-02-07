@@ -1,3 +1,4 @@
+import 'package:fitness_app_premium/core/models/weight_loss_plan.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +19,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final provider = context.watch<OnboardProvider>();
+    final plan = provider.currentWeightLossPlan;
 
     return Scaffold(
       backgroundColor: MyColor.homeBodyColor,
@@ -65,14 +67,14 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             // 2. Featured Challenge
             Text("Daily Challenge", style: theme.textTheme.titleLarge),
             SizedBox(height: 15.h),
-            _buildFeaturedCard(theme, provider),
+            _buildFeaturedCard(theme, provider, plan),
             
             SizedBox(height: 25.h),
 
             // 3. Recommended List
             _buildSectionHeader(theme, "Recommended for You"),
             SizedBox(height: 15.h),
-            _buildWorkoutList(theme),
+            _buildWorkoutList(theme, plan),
             
             SizedBox(height: 100.h), // Bottom padding for FAB
           ],
@@ -127,7 +129,11 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     );
   }
 
-  Widget _buildFeaturedCard(ThemeData theme, OnboardProvider provider) {
+  Widget _buildFeaturedCard(
+    ThemeData theme,
+    OnboardProvider provider,
+    WeightLossPlan plan,
+  ) {
     return Container(
       height: 220.h,
       width: double.infinity,
@@ -178,7 +184,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                     border: Border.all(color: Colors.white.withOpacity(0.3)),
                   ),
                   child: Text(
-                    "Advanced • 45 min",
+                    "${plan.levelName} • ${_formatDuration(plan.exercisePlan.duration)}",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -187,7 +193,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  "High Intensity Burn",
+                  _getFeaturedTitle(plan),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24.sp,
@@ -249,11 +255,21 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     );
   }
 
-  Widget _buildWorkoutList(ThemeData theme) {
+  Widget _buildWorkoutList(ThemeData theme, WeightLossPlan plan) {
+    final activities = plan.exercisePlan.activities;
+    final items = activities.isNotEmpty
+        ? activities.take(3).toList()
+        : [
+            "Full Body Flow",
+            "Core & Stability",
+            "Light Cardio",
+          ];
+    final calorie = _getEstimatedCalories(plan.level);
+
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
+      itemCount: items.length,
       separatorBuilder: (c, i) => SizedBox(height: 15.h),
       itemBuilder: (context, index) {
         return Container(
@@ -290,11 +306,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      index == 0
-                          ? "Lower Body Power"
-                          : index == 1
-                              ? "Core Strength"
-                              : "Morning Yoga",
+                      items[index],
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -305,12 +317,16 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                         Icon(Icons.access_time_rounded,
                             size: 14.h, color: MyColor.textThird),
                         SizedBox(width: 4.h),
-                        Text("30 min", style: theme.textTheme.bodySmall),
+                        Text(
+                          _formatDuration(plan.exercisePlan.duration),
+                          style: theme.textTheme.bodySmall,
+                        ),
                         SizedBox(width: 12.h),
                         Icon(Icons.local_fire_department_rounded,
                             size: 14.h, color: MyColor.calorieRed),
                         SizedBox(width: 4.h),
-                        Text("320 kcal", style: theme.textTheme.bodySmall),
+                        Text("$calorie kcal",
+                            style: theme.textTheme.bodySmall),
                       ],
                     ),
                   ],
@@ -330,5 +346,31 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         );
       },
     );
+  }
+
+  String _formatDuration(String duration) {
+    return duration.replaceAll('/day', '').trim();
+  }
+
+  String _getFeaturedTitle(WeightLossPlan plan) {
+    switch (plan.level) {
+      case PlanLevel.beginner:
+        return "Easy Burn Starter";
+      case PlanLevel.intermediate:
+        return "Balanced Fat Burn";
+      case PlanLevel.advanced:
+        return "High Intensity Burn";
+    }
+  }
+
+  int _getEstimatedCalories(PlanLevel level) {
+    switch (level) {
+      case PlanLevel.beginner:
+        return 220;
+      case PlanLevel.intermediate:
+        return 320;
+      case PlanLevel.advanced:
+        return 420;
+    }
   }
 }
