@@ -2,6 +2,17 @@ import 'package:fitness_app_premium/core/models/weight_loss_plan.dart';
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:flutter/material.dart';
 
+class WeightEntry {
+  final DateTime date;
+  final double weight;
+
+  const WeightEntry({
+    required this.date,
+    required this.weight,
+  });
+}
+
+
 class OnboardProvider with ChangeNotifier {
   int _selectedGender = 0;
   int _selectedPlan = 0;
@@ -128,15 +139,5 @@ class OnboardProvider with ChangeNotifier {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
-  // Goals removed: app now focuses on weight loss only for all users.
 }
 
-class WeightEntry {
-  final DateTime date;
-  final double weight;
-
-  const WeightEntry({
-    required this.date,
-    required this.weight,
-  });
-}

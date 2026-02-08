@@ -1,10 +1,10 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard2_gender.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard3_plan.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard5_height.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard6_weight.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard7_target_weight.dart';
-import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard8_complete.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard1_gender.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard2_plan.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard3_height.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard4_weight.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard5_target_weight.dart';
+import 'package:fitness_app_premium/features/onboard/presentation/widgets/onboard6_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,13 +18,12 @@ class _OnboardScreenState extends State<OnboardScreen> {
   late PageController _controller;
   int _selectedPage = 0;
   final List<Widget> _pages = [
-    const Onboard2Gender(),
-    const Onboard3Plan(),
-    //const Onboard4Target(),
-    const Onboard5Height(),
-    const Onboard6Weight(),
-    const Onboard7TargetWeight(),
-    const Onboard8Complete(),
+    const Onboard1Gender(),
+    const Onboard2Plan(),
+    const Onboard3Height(),
+    const Onboard4Weight(),
+    const Onboard5TargetWeight(),
+    const Onboard6Complete(),
   ];
 
   @override

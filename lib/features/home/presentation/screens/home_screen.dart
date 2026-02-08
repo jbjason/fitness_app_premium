@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
             _buildSectionTitle(theme, "Meals & Water"),
             SizedBox(height: 15.h),
             _buildMealAndWaterRow(theme),
-            SizedBox(height: 40.h),
+            SizedBox(height: 20.h + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

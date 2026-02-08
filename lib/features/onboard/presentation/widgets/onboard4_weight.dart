@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class Onboard6Weight extends StatefulWidget {
-  const Onboard6Weight({super.key});
+class Onboard4Weight extends StatefulWidget {
+  const Onboard4Weight({super.key});
   @override
-  State<Onboard6Weight> createState() => _Onboard6WeightState();
+  State<Onboard4Weight> createState() => _Onboard4WeightState();
 }
 
-class _Onboard6WeightState extends State<Onboard6Weight> {
+class _Onboard4WeightState extends State<Onboard4Weight> {
   double _currentWeight = 65.0; // Default start
   final double _minWeight = 30.0;
   final double _maxWeight = 150.0;

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class Onboard2Gender extends StatefulWidget {
-  const Onboard2Gender({super.key});
+class Onboard1Gender extends StatefulWidget {
+  const Onboard1Gender({super.key});
   @override
-  State<Onboard2Gender> createState() => _Onboard2GenderState();
+  State<Onboard1Gender> createState() => _Onboard1GenderState();
 }
 
-class _Onboard2GenderState extends State<Onboard2Gender> {
+class _Onboard1GenderState extends State<Onboard1Gender> {
   int _selectedGender = 0; // 0: Male, 1: Female
 
   @override

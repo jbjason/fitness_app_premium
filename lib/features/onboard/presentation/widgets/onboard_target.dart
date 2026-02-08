@@ -4,13 +4,13 @@
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:provider/provider.dart';
 
-// class Onboard4Target extends StatefulWidget {
-//   const Onboard4Target({super.key});
+// class OnboardTarget extends StatefulWidget {
+//   const OnboardTarget({super.key});
 //   @override
-//   State<Onboard4Target> createState() => _Onboard4TargetState();
+//   State<OnboardTarget> createState() => _OnboardTargetState();
 // }
 
-// class _Onboard4TargetState extends State<Onboard4Target> {
+// class _OnboardTargetState extends State<OnboardTarget> {
 //   int selectedIndex = 0;
 //   late final List<Map<String, String>> _goals;
 

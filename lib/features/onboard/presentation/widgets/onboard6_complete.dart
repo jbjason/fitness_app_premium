@@ -4,13 +4,13 @@ import 'package:fitness_app_premium/features/home/presentation/screens/home.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Onboard8Complete extends StatefulWidget {
-  const Onboard8Complete({super.key});
+class Onboard6Complete extends StatefulWidget {
+  const Onboard6Complete({super.key});
   @override
-  State<Onboard8Complete> createState() => _Onboard8CompleteState();
+  State<Onboard6Complete> createState() => _Onboard6CompleteState();
 }
 
-class _Onboard8CompleteState extends State<Onboard8Complete>
+class _Onboard6CompleteState extends State<Onboard6Complete>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

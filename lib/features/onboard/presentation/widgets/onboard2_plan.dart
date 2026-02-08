@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class Onboard3Plan extends StatefulWidget {
-  const Onboard3Plan({super.key});
+class Onboard2Plan extends StatefulWidget {
+  const Onboard2Plan({super.key});
   @override
-  State<Onboard3Plan> createState() => _Onboard3PlanState();
+  State<Onboard2Plan> createState() => _Onboard2PlanState();
 }
 
-class _Onboard3PlanState extends State<Onboard3Plan> {
+class _Onboard2PlanState extends State<Onboard2Plan> {
   int _selectedPlan = 0;
 
   @override

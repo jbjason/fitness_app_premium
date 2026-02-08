@@ -6,13 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class Onboard5Height extends StatefulWidget {
-  const Onboard5Height({super.key});
+class Onboard3Height extends StatefulWidget {
+  const Onboard3Height({super.key});
   @override
-  State<Onboard5Height> createState() => _Onboard5HeightState();
+  State<Onboard3Height> createState() => _Onboard3HeightState();
 }
 
-class _Onboard5HeightState extends State<Onboard5Height> {
+class _Onboard3HeightState extends State<Onboard3Height> {
   double _pointerValue = 165; // ~5ft 5in default start
   final double _minimumLevel = 120; // cm
   final double _maximumLevel = 220; // cm
