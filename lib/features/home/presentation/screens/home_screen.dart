@@ -1,7 +1,9 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
 import 'package:fitness_app_premium/features/home/presentation/screens/home_plan_details_screen.dart';
+import 'package:fitness_app_premium/features/home/presentation/widgets/home_sos_button.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -116,6 +118,44 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 100.h),
           ],
+        ),
+      ),
+    floatingActionButton: SizedBox(
+        height: 65.w,
+        width: 65.w,
+        child: FloatingActionButton(
+          heroTag: 'home_sos_fab',
+          onPressed: () {
+            HapticFeedback.heavyImpact();
+            showGeneralDialog(
+              context: context,
+              barrierDismissible: true,
+              barrierLabel: "SOS",
+              barrierColor: Colors.black.withOpacity(0.9),
+              pageBuilder: (ctx, a1, a2) => const SOSOverlay(),
+              transitionBuilder: (ctx, a1, a2, child) {
+                return ScaleTransition(
+                  scale: CurvedAnimation(parent: a1, curve: Curves.easeOutBack),
+                  child: child,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 300),
+            );
+          },
+          backgroundColor: MyColor.calorieRed,
+          elevation: 10,
+          shape: const CircleBorder(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.sos_rounded, color: Colors.white, size: 24.w),
+              Text("SOS",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
         ),
       ),
     );

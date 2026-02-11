@@ -1,5 +1,14 @@
 import 'package:fitness_app_premium/core/util/my_color.dart';
+import 'package:fitness_app_premium/core/util/my_enum.dart';
+import 'package:fitness_app_premium/features/auth/presentation/screens/auth_screen.dart';
 import 'package:fitness_app_premium/features/onboard/presentation/providers/onboard_provider.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_edit_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_language_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_notifications_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_privacy_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_about_us_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_premium_screen.dart';
+import 'package:fitness_app_premium/features/profile/presentation/screens/profile_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +20,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final provider = context.watch<OnboardProvider>();
-
     return Scaffold(
       backgroundColor: MyColor.homeBodyColor,
       body: SingleChildScrollView(
@@ -77,51 +85,61 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 30.h),
             // Premium Banner
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                gradient: LinearGradient(
-                    colors: provider.activeGradient,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
-                boxShadow: [
-                  BoxShadow(
-                      color: provider.activeGradient.last.withOpacity(0.4),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5))
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.w),
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(10.r)),
-                    child: Icon(Icons.workspace_premium_rounded,
-                        color: Colors.white, size: 24.w),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfilePremiumScreen(),
                   ),
-                  SizedBox(width: 15.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Upgrade to Premium",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp)),
-                        SizedBox(height: 2.h),
-                        Text("Unlock all features",
-                            style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 12.sp)),
-                      ],
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(16.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  gradient: LinearGradient(
+                      colors: provider.activeGradient,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight),
+                  boxShadow: [
+                    BoxShadow(
+                        color: provider.activeGradient.last.withOpacity(0.4),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5))
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10.r)),
+                      child: Icon(Icons.workspace_premium_rounded,
+                          color: Colors.white, size: 24.w),
                     ),
-                  ),
-                  Icon(Icons.chevron_right, color: Colors.white, size: 20.w)
-                ],
+                    SizedBox(width: 15.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Upgrade to Premium",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.sp)),
+                          SizedBox(height: 2.h),
+                          Text("Unlock all features",
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 12.sp)),
+                        ],
+                      ),
+                    ),
+                    Icon(Icons.chevron_right, color: Colors.white, size: 20.w)
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 25.h),
@@ -138,13 +156,22 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             _buildProfileItem(
-                theme, Icons.person_outline_rounded, "Edit Profile"),
+                context: context,
+                type: ProfileItemType.editProfile,
+                icon: Icons.person_outline_rounded,
+                label: "Edit Profile"),
             SizedBox(height: 10.h),
             _buildProfileItem(
-                theme, Icons.notifications_none_rounded, "Notifications"),
+                context: context,
+                type: ProfileItemType.notifications,
+                icon: Icons.notifications_none_rounded,
+                label: "Notifications"),
             SizedBox(height: 10.h),
             _buildProfileItem(
-                theme, Icons.security_rounded, "Privacy & Security"),
+                context: context,
+                type: ProfileItemType.privacy,
+                icon: Icons.security_rounded,
+                label: "Privacy & Security"),
 
             SizedBox(height: 20.h),
             Align(
@@ -158,7 +185,17 @@ class ProfileScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600)),
               ),
             ),
-            _buildProfileItem(theme, Icons.settings_outlined, "App Settings"),
+            _buildProfileItem(
+                context: context,
+                type: ProfileItemType.settings,
+                icon: Icons.settings_outlined,
+                label: "App Settings"),
+            SizedBox(height: 10.h),
+            _buildProfileItem(
+              context: context,
+              type: ProfileItemType.aboutUs,
+              icon: Icons.info_outline_rounded,
+              label: "About Us"),
             SizedBox(height: 20.h),
             // Log out
             Container(
@@ -198,35 +235,67 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileItem(ThemeData theme, IconData icon, String label) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: BorderRadius.circular(20.r),
-          boxShadow: [
-            BoxShadow(
-                color: MyColor.shadowLight,
-                blurRadius: 5,
-                offset: const Offset(0, 2))
-          ]),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.w),
-            decoration: BoxDecoration(
-                color: MyColor.homeBodyColor,
-                borderRadius: BorderRadius.circular(12.r)),
-            child: Icon(icon, color: MyColor.textColor, size: 20.w),
-          ),
-          SizedBox(width: 15.w),
-          Expanded(
-            child: Text(label,
-                style: theme.textTheme.bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp)),
-          ),
-          Icon(Icons.chevron_right, color: MyColor.inActiveColor, size: 20.w)
-        ],
+  Widget _buildProfileItem(
+      {required ProfileItemType type,
+      required BuildContext context,
+      required IconData icon,
+      required String label}) {
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () {
+        final route = switch (type) {
+          ProfileItemType.editProfile => ProfileEditScreen(),
+          ProfileItemType.notifications =>
+            const ProfileNotificationsScreen(),
+          ProfileItemType.privacy => ProfilePrivacyScreen(),
+          ProfileItemType.language => ProfileLanguageScreen(),
+          ProfileItemType.aboutUs => const ProfileAboutUsScreen(),
+          ProfileItemType.settings => ProfileSettingsScreen(),
+          ProfileItemType.logout => AuthScreen(),
+        };
+        if (type == ProfileItemType.logout) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => AuthScreen()),
+            (route) => false,
+          );
+          return;
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => route),
+          );
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+            color: theme.cardColor,
+            borderRadius: BorderRadius.circular(20.r),
+            boxShadow: [
+              BoxShadow(
+                  color: MyColor.shadowLight,
+                  blurRadius: 5,
+                  offset: const Offset(0, 2))
+            ]),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                  color: MyColor.homeBodyColor,
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Icon(icon, color: MyColor.textColor, size: 20.w),
+            ),
+            SizedBox(width: 15.w),
+            Expanded(
+              child: Text(label,
+                  style: theme.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp)),
+            ),
+            Icon(Icons.chevron_right, color: MyColor.inActiveColor, size: 20.w)
+          ],
+        ),
       ),
     );
   }
